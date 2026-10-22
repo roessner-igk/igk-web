@@ -52,6 +52,7 @@ nav a:not(.btn):hover{color:var(--blue)}
 .team{list-style:none;padding:0;margin:2rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem}
 .person img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r)}
 .person h3{margin:.75rem 0 .25rem}.person p{margin:0;font-size:.95rem}
+.jobs{display:block;width:100%;height:max(80vh,700px);border:1px solid #0002;border-radius:var(--r);margin-top:1.5rem}.note{font-size:.9rem}
 /* legal */
 .prose{max-width:800px}.prose h2{margin-top:2.5rem}.prose h3{margin-top:1.5rem}.prose{overflow-wrap:anywhere}
 /* footer */

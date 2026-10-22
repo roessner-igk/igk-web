@@ -22,7 +22,7 @@ HEAD = """<!DOCTYPE html>
   <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
   <nav>
     <a href="/#leistungen">Leistungen</a>
-    <a href="https://igk.jobs.personio.de/" rel="noopener">Karriere</a>
+    <a href="/karriere.html">Karriere</a>
     <a href="/ansprechpartner.html">Ansprechpartner</a>
     <a class="btn" href="tel:+4942984 10 42".replace(" ","")>Anrufen</a>
   </nav>
@@ -102,7 +102,7 @@ INDEX = f"""<section class="hero">
 <section class="wrap section cta">
   <h2>Karriere bei IGK</h2>
   <p>Werden Sie Teil unseres Teams.</p>
-  <a class="btn" href="https://igk.jobs.personio.de/" rel="noopener">Offene Stellen</a>
+  <a class="btn" href="/karriere.html">Offene Stellen</a>
 </section>
 <script>
 document.querySelector('[data-yt]').addEventListener('click', e => {{
@@ -122,10 +122,19 @@ ANSPRECH = f"""<section class="wrap section">
 </section>
 """
 
+KARRIERE = """<section class="wrap section">
+  <h1>Karriere</h1>
+  <p>Aktuelle Stellenangebote der IGK Abwassertechnik GmbH. Die Bewerbung läuft über unser Karriereportal bei Personio.</p>
+  <iframe class="jobs" src="https://igk.jobs.personio.de/?display=de" title="Offene Stellen bei IGK Abwassertechnik" loading="lazy"></iframe>
+  <p class="note">Wird die Ansicht nicht geladen? <a href="https://igk.jobs.personio.de/" rel="noopener">Stellenportal in neuem Tab öffnen</a>.</p>
+</section>
+"""
+
 legal = lambda h, n: f'<section class="wrap section prose">{FRAG(n)}</section>\n'
 
 PAGES = {
     "index": ("IGK Abwassertechnik – Rohr- und Kanaldienstleistungen", "Rohr- und Kanaldienstleistungen für Kommunen, Industrie und Privat", INDEX),
+    "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
     "impressum": ("Impressum – IGK Abwassertechnik GmbH", "Impressum der IGK Abwassertechnik GmbH", legal("", "impressum")),
     "datenschutz": ("Datenschutz – IGK Abwassertechnik GmbH", "Datenschutzerklärung der IGK Abwassertechnik GmbH", legal("", "datenschutz")),
