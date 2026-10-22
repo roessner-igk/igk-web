@@ -122,7 +122,7 @@ ANSPRECH = f"""<section class="wrap section">
 </section>
 """
 
-KARRIERE = """<section class="wrap section">
+KARRIERE = """<section class="wrap wide section">
   <h1>Karriere</h1>
   <p>Aktuelle Stellenangebote der IGK Abwassertechnik GmbH. Die Bewerbung läuft über unser Karriereportal bei Personio.</p>
   <iframe class="jobs" src="https://igk.jobs.personio.de/?display=de" title="Offene Stellen bei IGK Abwassertechnik" loading="lazy"></iframe>
