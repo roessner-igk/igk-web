@@ -3,24 +3,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: igk-website
+  name: web-igk
   labels:
-    app: igk-website
+    app: web-igk
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: igk-website
+      app: web-igk
   template:
     metadata:
       labels:
-        app: igk-website
+        app: web-igk
     spec:
       containers:
-        - name: igk-website
+        - name: web-igk
           # Replace with the immutable sha tag from CI once you've verified latest works,
-          # e.g. ghcr.io/samheyna/igk-website:sha-abcdef0
-          image: ghcr.io/samheyna/igk-website:latest
+          # e.g. ghcr.io/samheyna/web-igk:sha-abcdef0
+          image: ghcr.io/samheyna/web-igk:latest
           ports:
             - containerPort: 80
           resources:
@@ -46,10 +46,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: igk-website
+  name: web-igk
 spec:
   selector:
-    app: igk-website
+    app: web-igk
   ports:
     - port: 80
       targetPort: 80
