@@ -1,4 +1,7 @@
-# IGK Abwassertechnik – rebuild
-- `original/` raw wget mirror of https://igk-abwassertechnik.de/ (reference, TYPO3 output)
-- `assets/` deduped: images, icons (svg/favicon), fonts (Inter, Font Awesome), team photos, original css/js
-- `content/` original HTML pages (index, ansprechpartner, impressum, datenschutz) + plain-text extract
+# IGK Abwassertechnik – website rebuild
+Plain HTML + CSS, served by Caddy in a container (same setup as web-cv).
+- `site/` – deployed root (`assets/style.css`, images, icons, team, Inter font)
+- `build.py` – generates the 4 pages from shared header/footer; `content/*.frag` = legal text. Run `python3 build.py`
+- `original/` – raw mirror of old TYPO3 site (reference only, not in image)
+- `Dockerfile`, `Caddyfile`, `k8s/deployment.yaml`, `.github/workflows` – CI builds `ghcr.io/<owner>/<repo>`
+- Local test: `docker build -t igk . && docker run --rm -p 8089:80 igk`

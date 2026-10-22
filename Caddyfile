@@ -1,0 +1,17 @@
+:80 {
+	root * /srv
+	encode gzip zstd
+	file_server
+	header -Server
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+	}
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=2592000"
+	try_files {path} {path}.html
+	handle_errors {
+		respond "{err.status_code} {err.status_text}" {err.status_code}
+	}
+}
