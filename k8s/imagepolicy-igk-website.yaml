@@ -1,0 +1,27 @@
+# Same digest-reflection pattern as imagepolicy-cv-heyna-website.yaml;
+# reuses its pull secret for the private ghcr.io package.
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: igk-website
+  namespace: staticweb
+spec:
+  image: ghcr.io/samheyna/web-igk
+  interval: 1h
+  secretRef:
+    name: cv-heyna-website-pull-secret
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: igk-website
+  namespace: staticweb
+spec:
+  imageRepositoryRef:
+    name: igk-website
+  filterTags:
+    pattern: '^latest$'
+  digestReflectionPolicy: Always
+  interval: 1h
+  policy:
+    alphabetical: {}

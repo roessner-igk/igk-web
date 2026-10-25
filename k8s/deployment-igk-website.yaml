@@ -1,0 +1,89 @@
+# REFERENCE COPY. Live source of truth: SamHeyna/home-cluster, clusters/home-cluster/apps/staticweb/
+# Change the host/middlewares there, not here.
+# IGK Abwassertechnik site rebuild (review stage). Same pattern as
+# cv-heyna-website: Caddy image from private ghcr.io/samheyna/web-igk,
+# reuses the cv-heyna-website-pull-secret and ratelimit middleware. Public
+# (no Authentik) so the review link can be shared for feedback.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: igk-website
+  namespace: staticweb
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`igk.cluster.heyna.cloud`)
+      kind: Rule
+      middlewares:
+        - name: cv-heyna-website-ratelimit
+      services:
+        - name: igk-website
+          port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: igk-website
+  namespace: staticweb
+  labels:
+    app: igk-website
+spec:
+  type: ClusterIP
+  selector:
+    app: igk-website
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: igk-website
+  namespace: staticweb
+  labels:
+    app: igk-website
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: igk-website
+  template:
+    metadata:
+      labels:
+        app: igk-website
+    spec:
+      nodeSelector:
+        storage: "true"
+      imagePullSecrets:
+        - name: cv-heyna-website-pull-secret
+      containers:
+        - name: igk-website
+          image: ghcr.io/samheyna/web-igk:latest@sha256:54668856fc4a7f1fcc5f7f225721804649830d6f35cd788e34cd221b3e8554a9 # {"$imagepolicy": "staticweb:igk-website"}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "20m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 20

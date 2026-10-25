@@ -2,7 +2,7 @@
 """Tiny page builder: shared header/footer + page bodies -> site/*.html. Run: python3 build.py"""
 import pathlib
 R = pathlib.Path(__file__).parent
-FRAG = lambda n: (R / "content" / f"{n}.frag").read_text()
+FRAG = lambda n: (R / "legal" / f"{n}.frag").read_text()
 
 HEAD = """<!DOCTYPE html>
 <html lang="de">

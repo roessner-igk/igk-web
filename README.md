@@ -1,7 +1,39 @@
-# IGK Abwassertechnik – website rebuild
-Plain HTML + CSS, served by Caddy in a container (same setup as web-cv).
-- `site/` – deployed root (`assets/style.css`, images, icons, team, Inter font)
-- `build.py` – generates the 4 pages from shared header/footer; `content/*.frag` = legal text. Run `python3 build.py`
-- `original/` – raw mirror of old TYPO3 site (reference only, not in image)
-- `Dockerfile`, `Caddyfile`, `k8s/deployment.yaml`, `.github/workflows` – CI builds `ghcr.io/<owner>/<repo>`
-- Local test: `docker build -t igk . && docker run --rm -p 8089:80 igk`
+# web-igk – IGK Abwassertechnik website
+
+Static business site for IGK Abwassertechnik GmbH (Lilienthal). Plain HTML + CSS, no framework, no npm.
+Served by Caddy in a container; deployed to Kubernetes via Flux.
+
+- Review URL: https://igk.cluster.heyna.cloud
+- Repo: `SamHeyna/web-igk` · Image: `ghcr.io/samheyna/web-igk:latest`
+
+## Pages
+`/` Start · `/karriere` (embedded Personio job portal) · `/ansprechpartner` · `/impressum` · `/datenschutz`
+
+## Layout
+| Path | Purpose |
+|---|---|
+| `build.py` | Generates all `site/*.html` from shared header/footer + page bodies (Python stdlib only) |
+| `legal/*.frag` | Impressum / Datenschutz body text, inserted verbatim |
+| `site/` | Deployed web root. **Generated HTML + hand-edited `assets/`** |
+| `site/assets/style.css` | The only stylesheet |
+| `site/assets/{images,icons,team,fonts}` | Images, SVG icons, staff photos, Inter font |
+| `Dockerfile`, `Caddyfile` | `caddy:2-alpine`, serves `/srv`, gzip/zstd, security headers, clean URLs |
+| `.github/workflows/docker-publish.yml` | Push to `main` builds and pushes multi-arch image to GHCR |
+| `k8s/` | Reference copy of the manifests (live copy: `home-cluster` repo) |
+
+## Edit workflow
+1. Edit text/structure in `build.py` (or `legal/*.frag`), styling in `site/assets/style.css`.
+2. `python3 build.py` – regenerates `site/*.html`. **Commit the generated HTML too.**
+3. Preview: `docker build -t web-igk . && docker run --rm -p 8089:80 web-igk` → http://localhost:8089
+4. Push to `main`. CI builds the image; Flux rolls it out (image digest is picked up automatically).
+
+Never edit `site/*.html` by hand; it is overwritten by `build.py`.
+
+## Open points before go-live
+- Service card texts (Inspektion, Reinigung, Dichtheitsprüfung, Sanierung) and hero subline are drafted, not from the old site – client must confirm.
+- Service icon mapping is a guess (`messung` → Dichtheitsprüfung, `pruefung` → Sanierung).
+- Team photos and video poster are low-res thumbnails from the old TYPO3 site; request originals.
+- Impressum still cites "§ 5 TMG" (now DDG) – legal review needed. Datenschutz does not mention Personio (embedded on `/karriere`) – legal review needed.
+- Personio iframe has fixed height; fallback link exists for Personio outages.
+- Site is currently public and indexable on the review host; add `X-Robots-Tag: noindex` in `Caddyfile` for review, remove for production.
+- Old site had no ingress/domain setup for production: see `AGENTS.md` → "Go-live".
