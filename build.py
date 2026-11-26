@@ -187,8 +187,9 @@ def r_hero(eyebrow, h1, lead, bullets, active, cta, how=None):
     li = "".join(f"<li>{x}</li>" for x in bullets)
     how = f' <a class="btn ghost" href="#{how}">So läuft es ab</a>' if how else ""
     return (SNAVM
-            + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eyebrow}</p><h1>{h1}</h1><p>{lead}</p><ul class="ticks">{li}</ul>'
-            f'<p><a class="btn" href="#anfrage">{cta}</a>{how}</p></div></section>\n')
+            + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eyebrow}</p><h1>{h1}</h1><p>{lead}</p>'
+            f'<p><a class="btn" href="#anfrage">{cta}</a>{how}</p></div></section>\n'
+            f'<section class="section ticks-sec"><div class="wrap prose"><ul class="ticks">{li}</ul></div></section>\n')
 
 def sec(h2, body, alt=False, eyebrow="", id=""):
     i = f' id="{id}"' if id else ""
@@ -525,7 +526,11 @@ def fix(body, a, **kw):
         for x in [a] + [y for y in AREAS if y != a]:
             if (x, t) in CRUMBS: return f"/{lp(x, t)}.html"
         return m.group(0)
-    return re.sub(r"/L/([a-z0-9-]+)\.html", rep, body)
+    body = re.sub(r"/L/([a-z0-9-]+)\.html", rep, body)
+    def lift(m):  # Aufzählung aus dem Header heraus, damit alle Header gleich hoch sind
+        sec_h = m.group(1) + m.group(3) + "</div></section>"
+        return sec_h + f'\n<section class="section ticks-sec"><div class="wrap prose">{m.group(2)}</div></section>'
+    return re.sub(r'(<section class="hero"><div class="wrap">(?:(?!</section>).)*?)(<ul class="ticks">.*?</ul>)((?:(?!</section>).)*?)</div></section>', lift, body, flags=re.S)
 LEAF_PAGE = {}
 for old, new in [("din-en-1610", "din-en-1610"), ("kalibrierung", "rohrkalibrierung"), ("dreh-schwenkkopf-kamera", "dreh-schwenkkopf-kamera"),
                  ("sehende-duese", "sehende-duese"), ("wasserhoechstdruckfraesen", "wasserhoechstdruckfraesen")]:
