@@ -540,17 +540,19 @@ LEAF_PAGE = {}
 for old, new in [("din-en-1610", "din-en-1610"), ("kalibrierung", "rohrkalibrierung"), ("dreh-schwenkkopf-kamera", "dreh-schwenkkopf-kamera"),
                  ("sehende-duese", "sehende-duese"), ("wasserhoechstdruckfraesen", "wasserhoechstdruckfraesen")]:
     LEAF_PAGE[new] = PAGES.pop(old)
-EMPTY = {"dreh-schwenkkopf-kamera", "sehende-duese"}  # Text/Inhalt vorerst leer (nur Überschrift)
+EMPTY = set(LEAF_PAGE)  # Text/Inhalt aller Unterpunkt-Seiten vorerst leer (nur Überschrift)
 for s in EMPTY: LEAF_PAGE.pop(s)
 kt, kd, kbody = PAGES.pop("kabelschutzrohre")
-PAGES["kabelschutzrohre"] = (kt, kd, fix(kbody, "kabelschutzrohre")); PAGE_AREA["kabelschutzrohre"] = "kabelschutzrohre"
+PAGES["kabelschutzrohre"] = ("Kabelschutzrohre – IGK Abwassertechnik GmbH", kd,
+    snav("kabelschutzrohre") + '<section class="hero"><div class="wrap"><p class="eyebrow">Leistungen</p><h1>Kabelschutzrohre</h1></div></section>\n'
+    + area_cards("kabelschutzrohre")); PAGE_AREA["kabelschutzrohre"] = "kabelschutzrohre"
 PAGES["wasser"] = ("Wasser – IGK Abwassertechnik GmbH", "Abwasser- und Regenwasserleitungen: Inspektion, Reinigung, Dichtheitsprüfung, Kalibrierung und Sanierung",
-    snav("wasser") + f'<section class="hero"><div class="wrap"><p class="eyebrow">Leistungen</p><h1>Wasser</h1><p>{AREAS["wasser"]["lead"]}</p></div></section>\n'
+    snav("wasser") + f'<section class="hero"><div class="wrap"><p class="eyebrow">Leistungen</p><h1>Wasser</h1></div></section>\n'
     + area_cards("wasser") + contact("Anfrage zu Wasser")); PAGE_AREA["wasser"] = "wasser"
 for slug, (a, g) in GROUPPAGES.items():
     d = AREAS[a]
     PAGES[slug] = (f"{g[1]} – {d['title']} – IGK Abwassertechnik GmbH", f"{g[1]} für {d['what']} bei der IGK Abwassertechnik GmbH",
-        snav(a, g=g) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{d["title"]}</p><h1>{g[1]}</h1><p>Alle Leistungen im Bereich {g[1]} für {d["what"]}.</p></div></section>\n'
+        snav(a, g=g) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{d["title"]}</p><h1>{g[1]}</h1></div></section>\n'
         + group_body(a, g) + contact(f"{g[1]} anfragen")); PAGE_AREA[slug] = a
 for (a, s), crumbs in CRUMBS.items():
     t, d = LEAF_TITLES[s], AREAS[a]
@@ -560,7 +562,7 @@ for (a, s), crumbs in CRUMBS.items():
     else:
         c = crumbs[0]; eb = d["title"] + ("" if c[2] is None else f" · {c[1]}")
         PAGES[lp(a, s)] = (f"{t} – {d['title']} – IGK Abwassertechnik GmbH", f"{t}: Beschreibung folgt",
-            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1>{"" if s in EMPTY else "<p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze.</p>"}'
+            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1>'
             f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
         NOINDEX.add(lp(a, s))
     PAGE_AREA[lp(a, s)] = a
@@ -575,6 +577,7 @@ for name, (t, d, body) in PAGES.items():
     body = re.sub(r'<section[^>]*id="anfrage".*?</section>\n?', "", body, flags=re.S)  # Anfrage-Rubrik am Seitenende entfällt, Anfrage über Button oben
     body = body.replace('href="#anfrage"', f'href="mailto:{MAIL}"')
     body = re.sub(r'<a class="btn" href="mailto:' + re.escape(MAIL) + r'">[^<]*</a>\s*', "", body)  # keine Anfrage-Buttons im Inhalt
+    body = re.sub(r'(<section class="hero">.*?</section>)', lambda m: re.sub(r'<a [^>]*>.*?</a>\s*', "", m.group(1), flags=re.S), body, flags=re.S)  # keine Links im blauen Header
     body = re.sub(r'<a class="btn ghost" href="#[^"]*">So läuft es ab</a>\s*', "", body)  # kein Sprungbutton im Header-Kasten
     body = re.sub(r'<p>\s*</p>\n?', "", body)
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
