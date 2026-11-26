@@ -44,7 +44,9 @@ nav a:not(.btn):hover{color:var(--blue)}
 .cards-services .card{flex:0 0 calc((100% - 2*1.25rem)/3);box-sizing:border-box}
 @media(max-width:800px){.cards-services .card{flex-basis:calc((100% - 1.25rem)/2)}}
 @media(max-width:520px){.cards-services .card{flex-basis:100%}}
-h3.area{margin:2.5rem 0 0}.prose .cards-services{padding:0}
+.prose .cards-services{padding:0}
+.cards-two .card{flex-basis:calc((100% - 1.25rem)/2)}
+@media(max-width:520px){.cards-two .card{flex-basis:100%}}
 .card ul{margin:.75rem 0 0;padding-left:1.1rem}.card li ul{margin:.2rem 0 .2rem}
 /* video */
 .split{display:grid;gap:2.5rem;grid-template-columns:1fr 1fr;align-items:center}

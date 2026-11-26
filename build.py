@@ -21,11 +21,7 @@ HEAD = """<!DOCTYPE html>
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Menü">
   <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
   <nav>
-    <a href="/#leistungen">Leistungen</a>
-    <a href="/wasser.html">Wasser</a>
-    <a href="/kabelschutzrohre.html">Kabelschutzrohre</a>
-    <a href="/karriere.html">Karriere</a>
-    <a href="/ansprechpartner.html">Ansprechpartner</a>
+    {nav}
     <a class="btn" href="tel:+4942984 10 42".replace(" ","")>Anrufen</a>
   </nav>
 </header>
@@ -124,9 +120,10 @@ def tile(a, g, kids=True):
     ico, txt = GROUP_META[g[0]]
     return (f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span>'
             f'<h3><a href="/{gp(a, g)}.html">{g[1]}</a></h3><p>{txt}</p>' + (tree_ul(g[2]) if kids and g[2] else "") + "</li>")
-cards = "".join(
-    f'<h3 class="area"><a href="/{a}.html">{d["title"]}</a></h3><ul class="cards cards-services">'
-    + "".join(tile(a, g, kids=False) for g in d["groups"]) + "</ul>" for a, d in AREAS.items())
+AREA_TILE = {"wasser": ("wasser", "Abwasser- und Regenwasserleitungen."), "kabelschutzrohre": ("kabelschutzrohre", "Kabelschutzrohre und Leerrohre.")}
+cards = '<ul class="cards cards-services cards-two">' + "".join(
+    f'<li class="card"><span class="ico"><img src="/assets/icons/{AREA_TILE[a][0]}.svg" alt="" width="40" height="40"></span>'
+    f'<h3><a href="/{a}.html">{d["title"]}</a></h3><p>{AREA_TILE[a][1]}</p></li>' for a, d in AREAS.items()) + "</ul>"
 
 TEAM = [
     ("Thorbjoern_Roessner", "Ing. Thorbjörn Rössner", "Geschäftsführender Gesellschafter · Zertifizierter Kanalsanierungsberater", "Kalkulation, Angebotserstellung und Projektleitung Sanierung"),
@@ -540,6 +537,15 @@ for slug, (a, g) in GROUPPAGES.items():
     PAGES[slug] = (f"{g[1]} – {d['title']} – IGK Abwassertechnik GmbH", f"{g[1]} für {d['what']} bei der IGK Abwassertechnik GmbH",
         snav(slug) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{d["title"]}</p><h1>{g[1]}</h1><p>Alle Leistungen im Bereich {g[1]} für {d["what"]}.</p></div></section>\n'
         + sec("Leistungen", tree_ul(g[2])) + contact(f"{g[1]} anfragen"))
+def nav_for(name):
+    L = '<a href="/#leistungen">Leistungen</a>'
+    if name in AREAS: others = [a for a in AREAS if a != name]
+    elif name in GROUPPAGES: others = [a for a in AREAS if a != GROUPPAGES[name][0]]
+    elif name in LEAF_TITLES:
+        own = {a for a, g in CRUMBS[name]}
+        others = [a for a in AREAS if a not in own] or list(AREAS)
+    else: return L + '\n    <a href="/karriere.html">Karriere</a>\n    <a href="/ansprechpartner.html">Ansprechpartner</a>'
+    return L + "".join(f'\n    <a href="/{a}.html">{AREAS[a]["title"]}</a>' for a in others)
 NOINDEX = set()
 for slug, t in LEAF_TITLES.items():
     if slug in PAGES: continue
@@ -550,7 +556,7 @@ for slug, t in LEAF_TITLES.items():
         f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
     NOINDEX.add(slug)
 for name, (t, d, body) in PAGES.items():
-    head = HEAD.format(title=t, desc=d)
+    head = HEAD.format(title=t, desc=d, nav=nav_for(name))
     if name in NOINDEX: head = head.replace("</head>", '<meta name="robots" content="noindex">\n</head>')
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
 print("built", list(PAGES))
