@@ -47,7 +47,7 @@ FOOT = """</main>
       <a href="https://m.facebook.com/igk.abwassertechnik" rel="noopener">Facebook</a>
     </p>
   </div>
-  <div class="wrap legal"><span>&copy; IGK Abwassertechnik GmbH</span><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></div>
+  <div class="wrap legal"><span>&copy; IGK Abwassertechnik GmbH</span><a href="/impressum.html">Impressum</a><a href="/agb.html">AGB</a><a href="/datenschutz.html">Datenschutz</a></div>
 </footer>
 </body>
 </html>
@@ -514,12 +514,13 @@ PAGES = {
     "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
     "impressum": ("Impressum – IGK Abwassertechnik GmbH", "Impressum der IGK Abwassertechnik GmbH", legal("", "impressum")),
+    "agb": ("AGB – IGK Abwassertechnik GmbH", "Allgemeine Geschäftsbedingungen der IGK Abwassertechnik GmbH", legal("", "agb")),
     "datenschutz": ("Datenschutz – IGK Abwassertechnik GmbH", "Datenschutzerklärung der IGK Abwassertechnik GmbH", legal("", "datenschutz")),
 }
 
 # Bereichs-, Gruppen- und Unterpunktseiten je Bereich aus der Struktur
 PAGE_AREA = {}   # Seite -> Bereich (steuert die Navigation oben rechts)
-NOINDEX = set()
+NOINDEX = {"agb"}  # Platzhalter, bis der AGB-Text vorliegt
 def fix(body, a, **kw):
     body = body.replace(SNAVM, snav(a, **kw))
     def rep(m):  # /L/<unterpunkt>.html -> Seite im selben Bereich, sonst im anderen

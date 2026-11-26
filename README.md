@@ -48,3 +48,5 @@ Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 Source: Settings → Pages → branch `main`, folder `/docs`. `build.py` writes `docs/` (copy of `site/`, root paths prefixed `/igk-web`). Commit `docs/` with `site/`.
 - Interim: https://roessner-igk.github.io/igk-web/
 - Custom domain: add file `CNAME` (repo root, one line: domain), run `python3 build.py` (no prefix then), set domain in Settings → Pages, point DNS (CNAME `www` → `roessner-igk.github.io`, apex A records per GitHub docs).
+
+- AGB: Seite `/agb.html` (Link im Footer zwischen Impressum und Datenschutz) ist ein Platzhalter mit noindex. Den AGB-Text liefert der Kunde; er kommt nach `legal/agb.frag`, danach `agb` aus `NOINDEX` in `build.py` entfernen.
