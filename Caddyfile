@@ -2,6 +2,16 @@
 	root * /srv
 	encode gzip zstd
 	file_server
+	redir /rohrtechnik /kabelschutzrohre permanent
+	redir /rohrtechnik.html /kabelschutzrohre permanent
+	redir /druckpruefung /din-en-1610 permanent
+	redir /druckpruefung.html /din-en-1610 permanent
+	redir /inspektion /dreh-schwenkkopf-kamera permanent
+	redir /inspektion.html /dreh-schwenkkopf-kamera permanent
+	redir /reinigung /sehende-duese permanent
+	redir /reinigung.html /sehende-duese permanent
+	redir /hochdruck /wasserhoechstdruckfraesen permanent
+	redir /hochdruck.html /wasserhoechstdruckfraesen permanent
 	header -Server
 	header {
 		X-Content-Type-Options nosniff

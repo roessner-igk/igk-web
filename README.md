@@ -7,7 +7,9 @@ Served by Caddy in a container; deployed to Kubernetes via Flux.
 - Repo: `SamHeyna/web-igk` · Image: `ghcr.io/samheyna/web-igk:latest`
 
 ## Pages
-`/` Start · `/karriere` (embedded Personio job portal) · `/ansprechpartner` · `/impressum` · `/datenschutz`
+`/` Start · `/wasser` und `/kabelschutzrohre` (Leistungsbereiche, je mit Gruppen Inspektion, Reinigung, Dichtheitsprüfung, Kalibrierung, Sanierung; Kabelschutzrohre zusätzlich Seileinzug) · Unterpunkte als gemeinsame Seiten · `/karriere` (embedded Personio job portal) · `/ansprechpartner` · `/impressum` · `/datenschutz`
+
+Struktur steht in `build.py` (`AREAS`, `LEAF_TITLES`): gleiche Namen = eine Seite, von beiden Bereichen verlinkt. Gruppen- und Bereichsseiten und die Breadcrumb-Zeile entstehen daraus. Nummerierung/Buchstaben der Strukturvorlage nur intern, nicht auf der Seite. Unterpunkte ohne Text sind Platzhalter mit `noindex` (Liste: `NOINDEX` in `build.py`); beim Befüllen Seite in `PAGES` anlegen, dann entfällt der Platzhalter automatisch.
 
 ## Layout
 | Path | Purpose |
@@ -30,11 +32,11 @@ Served by Caddy in a container; deployed to Kubernetes via Flux.
 Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 
 ## Open points before go-live
-- Rohrtechnik pages (`rohrtechnik`, `druckpruefung`, `kalibrierung`, `inspektion`) mirror structure and headings of hexbee.de/rohrtechnik, /kabelschutzrohr-druckpruefung, /kabelschutzrohr-kalibrierung, /rohrinspektion; texts adapted to IGK, no images/form. Left out: ROHRBLICK/Windenkamera product data, HGÜ reference, Haftpflicht/DSGVO claims, Oldenburg/"bundesweit". Client must confirm IGK offers all services (esp. Seileinzug, Kamerabefahrung), norm refs, STLB/Kalibertabelle, and that hexbee texts may be reused (copyright).
-- Seite `reinigung` (Reinigung unter optischer Kontrolle) ist sinngemäß nach canal-control.de/…/die-sehende-duese adaptiert, ohne Bilder, Zahlen (DN-Bereich, Reichweite), Ansprechpartner und Firmenaussagen. Kunde muss bestätigen, dass IGK diese Technik (lenkbare Spüleinheit mit Kamera) anbietet, die Leistungsmerkmale stimmen und der Begriff „sehende Düse“ genutzt werden darf; Texte vor Go-live auf Eigenständigkeit prüfen.
-- Seite `hochdruck` (Höchstdruck-Wasserstrahlen, Unterpunkt von Kanalreinigung) ist inhaltlich neu formuliert nach canal-control.de/…/wasserhoechstdruck, ohne Bilder, Nennweiten, Haltungslängen, Geschwindigkeits-/Kostenvergleich und Ansprechpartner. Kunde muss bestätigen, dass IGK Wasserstrahl-Roboter mit Kamera und Kaltschneiden anbietet, welche Einsatzgrenzen gelten und ob der Abtrag der genannten Materialien (u. a. Liner, Beton, Stahl) stimmt.
-- Service card texts (Inspektion, Reinigung, Dichtheitsprüfung, Sanierung) and hero subline are drafted, not from the old site – client must confirm.
-- Service icon mapping is a guess (`messung` → Dichtheitsprüfung, `pruefung` → Sanierung).
+- Kabelschutzrohr-Seiten (`kabelschutzrohre`, `din-en-1610`, `kalibrierung`, `dreh-schwenkkopf-kamera`) mirror structure and headings of hexbee.de/rohrtechnik, /kabelschutzrohr-druckpruefung, /kabelschutzrohr-kalibrierung, /rohrinspektion; texts adapted to IGK, no images/form. Left out: ROHRBLICK/Windenkamera product data, HGÜ reference, Haftpflicht/DSGVO claims, Oldenburg/"bundesweit". Client must confirm IGK offers all services (esp. Seileinzug, Kamerabefahrung), norm refs, STLB/Kalibertabelle, and that hexbee texts may be reused (copyright).
+- Seite `sehende-duese` (Reinigung unter optischer Kontrolle) ist sinngemäß nach canal-control.de/…/die-sehende-duese adaptiert, ohne Bilder, Zahlen (DN-Bereich, Reichweite), Ansprechpartner und Firmenaussagen. Kunde muss bestätigen, dass IGK diese Technik (lenkbare Spüleinheit mit Kamera) anbietet, die Leistungsmerkmale stimmen und der Begriff „sehende Düse“ genutzt werden darf; Texte vor Go-live auf Eigenständigkeit prüfen.
+- Seite `wasserhoechstdruckfraesen` (Höchstdruck-Wasserstrahlen) ist inhaltlich neu formuliert nach canal-control.de/…/wasserhoechstdruck, ohne Bilder, Nennweiten, Haltungslängen, Geschwindigkeits-/Kostenvergleich und Ansprechpartner. Kunde muss bestätigen, dass IGK Wasserstrahl-Roboter mit Kamera und Kaltschneiden anbietet, welche Einsatzgrenzen gelten und ob der Abtrag der genannten Materialien (u. a. Liner, Beton, Stahl) stimmt.
+- Bereichs- und Gruppentexte (Startseite, `wasser`, `kabelschutzrohre`) und hero subline are drafted – client must confirm.
+- Bestehende Texte `din-en-1610` und `kalibrierung` sind kabelschutzrohr-spezifisch, die Seiten gelten laut Struktur auch für Wasser: inhaltlich anpassen. Alte URLs (`/rohrtechnik`, `/druckpruefung`, `/inspektion`, `/reinigung`, `/hochdruck`) leitet der `Caddyfile` weiter, GitHub Pages nicht.
 - Team photos and video poster are low-res thumbnails from the old TYPO3 site; request originals.
 - Impressum still cites "§ 5 TMG" (now DDG) – legal review needed. Datenschutz does not mention Personio (embedded on `/karriere`) – legal review needed.
 - Personio iframe has fixed height; fallback link exists for Personio outages.
