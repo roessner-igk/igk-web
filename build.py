@@ -540,6 +540,8 @@ LEAF_PAGE = {}
 for old, new in [("din-en-1610", "din-en-1610"), ("kalibrierung", "rohrkalibrierung"), ("dreh-schwenkkopf-kamera", "dreh-schwenkkopf-kamera"),
                  ("sehende-duese", "sehende-duese"), ("wasserhoechstdruckfraesen", "wasserhoechstdruckfraesen")]:
     LEAF_PAGE[new] = PAGES.pop(old)
+EMPTY = {"dreh-schwenkkopf-kamera"}  # Text/Inhalt vorerst leer (nur Überschrift)
+for s in EMPTY: LEAF_PAGE.pop(s)
 kt, kd, kbody = PAGES.pop("kabelschutzrohre")
 PAGES["kabelschutzrohre"] = (kt, kd, fix(kbody, "kabelschutzrohre")); PAGE_AREA["kabelschutzrohre"] = "kabelschutzrohre"
 PAGES["wasser"] = ("Wasser – IGK Abwassertechnik GmbH", "Abwasser- und Regenwasserleitungen: Inspektion, Reinigung, Dichtheitsprüfung, Kalibrierung und Sanierung",
@@ -558,7 +560,7 @@ for (a, s), crumbs in CRUMBS.items():
     else:
         c = crumbs[0]; eb = d["title"] + ("" if c[2] is None else f" · {c[1]}")
         PAGES[lp(a, s)] = (f"{t} – {d['title']} – IGK Abwassertechnik GmbH", f"{t}: Beschreibung folgt",
-            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1><p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze.</p>'
+            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1>{"" if s in EMPTY else "<p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze.</p>"}'
             f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
         NOINDEX.add(lp(a, s))
     PAGE_AREA[lp(a, s)] = a
