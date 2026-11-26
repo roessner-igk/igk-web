@@ -75,3 +75,5 @@ address{font-style:normal}
 details{border-bottom:1px solid #0002;padding:.8rem 0}summary{cursor:pointer;font-weight:600;color:var(--navy)}details p{margin:.6rem 0 0}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .prose .cards{padding:0}
+.eyebrow{margin:0 0 .4rem;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}.hero .eyebrow{color:#9fdcf5}
+h4{margin:1.25rem 0 .25rem;color:var(--navy)}
