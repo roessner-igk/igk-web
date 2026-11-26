@@ -31,7 +31,9 @@ nav a:not(.btn):hover{color:var(--blue)}
 }
 /* hero */
 .hero{color:#fff;min-height:30rem;display:flex;align-items:center;padding:4rem 0;box-sizing:border-box;background:linear-gradient(110deg,#004461ee 30%,#004461aa),url(/igk-web/assets/images/header.jpg) center/cover}
-.hero .wrap{width:100%}
+.hero{position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;z-index:0;height:121%;aspect-ratio:1;left:77.5%;top:37%;transform:translate(-50%,-50%);background:url(/igk-web/assets/images/signet.svg) center/contain no-repeat;pointer-events:none}
+.hero .wrap{width:100%;position:relative;z-index:1}
 .hero h1{color:#fff;max-width:26ch;margin:0 0 1.5rem;text-wrap:balance}
 .ticks-sec{padding:2rem 0 0}
 .hero p{font-size:1.15rem;max-width:72ch}
