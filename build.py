@@ -554,7 +554,7 @@ for (a, s), crumbs in CRUMBS.items():
     else:
         c = crumbs[0]; eb = d["title"] + ("" if c[2] is None else f" · {c[1]}")
         PAGES[lp(a, s)] = (f"{t} – {d['title']} – IGK Abwassertechnik GmbH", f"{t}: Beschreibung folgt",
-            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1><p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze. Sprechen Sie uns gern direkt an.</p>'
+            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1><p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze.</p>'
             f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
         NOINDEX.add(lp(a, s))
     PAGE_AREA[lp(a, s)] = a

@@ -1,1 +1,1 @@
-<h1>Allgemeine Geschäftsbedingungen</h1><p>Die Allgemeinen Geschäftsbedingungen der IGK Abwassertechnik GmbH werden an dieser Stelle veröffentlicht.</p><p>Bei Fragen erreichen Sie uns unter <a href="tel:+494298410042">04298 41 0 42</a> oder per E-Mail an <a href="mailto:info@igk-abwassertechnik.de">info@igk-abwassertechnik.de</a>.</p>
+<h1>Allgemeine Geschäftsbedingungen</h1><p>Die Allgemeinen Geschäftsbedingungen der IGK Abwassertechnik GmbH werden an dieser Stelle veröffentlicht.</p>
