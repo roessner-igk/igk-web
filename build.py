@@ -52,7 +52,8 @@ FOOT = """</main>
 </html>
 """
 
-# --- Leistungsstruktur (intern: Bereiche Wasser / Kabelschutzrohre, je Gruppen -> Unterpunkte). Gleiche Namen = eine gemeinsame Seite.
+# --- Leistungsstruktur (intern: Bereiche Wasser / Kabelschutzrohre, je Gruppen -> Unterpunkte).
+# Gleiche Namen = gleicher Inhalt: der Inhalt steht einmal (LEAF_PAGE / Platzhalter), die Seite wird je Bereich erzeugt, damit Navigation und Einordnung stimmen.
 # Nummerierung und Buchstaben aus der Strukturvorlage nur intern, nicht auf der Seite.
 LEAF_TITLES = {
     "spezialinspektion-360": "360-Grad-Spezialinspektion", "dreh-schwenkkopf-kamera": "Dreh-/Schwenkkopf-Kamera",
@@ -61,11 +62,14 @@ LEAF_TITLES = {
     "wasserhoechstdruckfraesen": "Wasserhöchstdruckfräsen",
     "din-en-1610": "DIN EN 1610", "sonderpruefungen": "Sonderprüfungen", "hochdruckpruefungen": "Hochdruckprüfungen",
     "abscheider-generalinspektion": "Generalinspektion von Abscheidern",
-    "kalibrierung": "Kalibrierung", "deformationsmessung": "Deformationsmessung", "seileinzug": "Seileinzug",
+    "rohrkalibrierung": "Kalibrierung", "deformationsmessung": "Deformationsmessung", "seileinzug": "Seileinzug",
     "schlauchliner": "Schlauchliner", "hausanschlusssanierung": "Hausanschlusssanierung", "hauptkanalsanierung": "Hauptkanalsanierung",
     "kurzliner": "Kurzliner", "edelstahlmanschette": "Edelstahlmanschette", "linerendmanschette": "Linerendmanschette",
     "hutprofil": "Hutprofil", "roboterfraesarbeiten": "Roboterfräsarbeiten",
 }
+LEAF_ICON = {s: s for s in LEAF_TITLES}  # Icon-Dateiname = Slug, außer:
+LEAF_ICON.update({"wasserhoechstdruckfraesen": "reinigung", "rohrkalibrierung": "kalibrierung"})
+GROUP_ICON = {"inspektion": "inspektion", "reinigung": "reinigung", "dichtheitspruefung": "messung", "kalibrierung": "kalibrierung", "seileinzug": "seileinzug", "sanierung": "pruefung"}
 # Gruppe = (Schlüssel, Titel, Knoten). Knoten: Slug (Seite) oder (Slug-oder-Überschrift, [Knoten]). Knoten None = Gruppe ist selbst die Seite.
 AREAS = {
     "wasser": {"title": "Wasser", "what": "Abwasser- und Regenwasserleitungen",
@@ -74,7 +78,7 @@ AREAS = {
             ("inspektion", "Inspektion", ["dreh-schwenkkopf-kamera", "panorama-inspektion-360", "drohnenbefliegung", "spezialinspektion-360"]),
             ("reinigung", "Reinigung", ["hochdruckspuelwagen", "sehende-duese", "molchung", "wasserhoechstdruckfraesen"]),
             ("dichtheitspruefung", "Dichtheitsprüfung", ["din-en-1610", "abscheider-generalinspektion", "hochdruckpruefungen", "sonderpruefungen"]),
-            ("kalibrierung", "Kalibrierung", ["deformationsmessung", "kalibrierung"]),
+            ("kalibrierung", "Kalibrierung", ["deformationsmessung", "rohrkalibrierung"]),
             ("sanierung", "Sanierung", [("Renovation", [("schlauchliner", ["hausanschlusssanierung", "hauptkanalsanierung"])]),
                                         ("Reparatur", ["kurzliner", "edelstahlmanschette", "linerendmanschette", "hutprofil"]),
                                         ("Robotertätigkeiten", ["roboterfraesarbeiten", "wasserhoechstdruckfraesen"])])]},
@@ -84,42 +88,24 @@ AREAS = {
             ("inspektion", "Inspektion", ["spezialinspektion-360", "dreh-schwenkkopf-kamera", "panorama-inspektion-360", "drohnenbefliegung"]),
             ("reinigung", "Reinigung", ["molchung", "hochdruckspuelwagen", "wasserhoechstdruckfraesen"]),
             ("dichtheitspruefung", "Dichtheitsprüfung", ["din-en-1610", "sonderpruefungen", "hochdruckpruefungen"]),
-            ("kalibrierung", "Kalibrierung", ["kalibrierung", "deformationsmessung"]),
+            ("kalibrierung", "Kalibrierung", ["rohrkalibrierung", "deformationsmessung"]),
             ("seileinzug", "Seileinzug", None),
             ("sanierung", "Sanierung", [("Renovation", ["schlauchliner"]), ("Reparatur", ["kurzliner", "edelstahlmanschette", "linerendmanschette"]),
                                         ("Robotertätigkeiten", ["roboterfraesarbeiten", "wasserhoechstdruckfraesen"])])]},
 }
-gp = lambda a, g: g[0] if g[2] is None else f"{a}-{g[0]}"  # Seiten-Slug der Gruppe
+gp = lambda a, g: f"{a}-{g[0]}"  # Seiten-Slug einer Gruppe (bei Seileinzug: der Seite selbst)
+lp = lambda a, s: f"{a}-{s}"      # Seiten-Slug eines Unterpunkts im Bereich a
 def leaves(nodes):
     for n in nodes:
         s, kids = (n, None) if isinstance(n, str) else n
         if s in LEAF_TITLES: yield s
         if kids: yield from leaves(kids)
 GROUPPAGES = {gp(a, g): (a, g) for a, d in AREAS.items() for g in d["groups"] if g[2] is not None}
-CRUMBS = {}
+CRUMBS = {}  # (Bereich, Unterpunkt) -> [Gruppen]
 for a, d in AREAS.items():
     for g in d["groups"]:
         for s in ([g[0]] if g[2] is None else leaves(g[2])):
-            if (a, g) not in CRUMBS.setdefault(s, []): CRUMBS[s].append((a, g))
-def tree_ul(nodes):
-    out = ""
-    for n in nodes:
-        s, kids = (n, None) if isinstance(n, str) else n
-        head = f'<a href="/{s}.html">{LEAF_TITLES[s]}</a>' if s in LEAF_TITLES else f"<strong>{s}</strong>"
-        out += "<li>" + head + (tree_ul(kids) if kids else "") + "</li>"
-    return "<ul>" + out + "</ul>"
-GROUP_META = {  # Gruppe -> (Icon, Kurztext). Texte Inspektion/Reinigung/Dichtheitsprüfung/Sanierung aus der alten Kachelansicht; Kalibrierung/Seileinzug neu (Entwurf).
-    "inspektion": ("inspektion", "Kanal- und Rohrinspektion mit Kameratechnik."),
-    "reinigung": ("reinigung", "Saugen, Spülen und Fräsen von Rohren und Kanälen."),
-    "dichtheitspruefung": ("messung", "Prüfung von Rohr- und Kanalnetzen auf Dichtheit."),
-    "kalibrierung": ("kalibrierung", "Nachweis der Profilfreiheit von Rohren."),
-    "seileinzug": ("seileinzug", "Einziehen des Zugseils in das Rohr."),
-    "sanierung": ("pruefung", "Sanierung schadhafter Rohre und Kanäle."),
-}
-def tile(a, g, kids=True):
-    ico, txt = GROUP_META[g[0]]
-    return (f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span>'
-            f'<h3><a href="/{gp(a, g)}.html">{g[1]}</a></h3><p>{txt}</p>' + (tree_ul(g[2]) if kids and g[2] else "") + "</li>")
+            CRUMBS.setdefault((a, s), []).append(g)
 AREA_TILE = {"wasser": ("wasser", "Abwasser- und Regenwasserleitungen."), "kabelschutzrohre": ("kabelschutzrohre", "Kabelschutzrohre und Leerrohre.")}
 cards = '<ul class="cards cards-services cards-two">' + "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{AREA_TILE[a][0]}.svg" alt="" width="40" height="40"></span>'
@@ -201,7 +187,7 @@ MAIL = "vertrieb@igk-abwassertechnik.de"  # Anfragen/Angebote
 def r_hero(eyebrow, h1, lead, bullets, active, cta, how=None):
     li = "".join(f"<li>{x}</li>" for x in bullets)
     how = f' <a class="btn ghost" href="#{how}">So läuft es ab</a>' if how else ""
-    return (snav(active)
+    return (SNAVM
             + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eyebrow}</p><h1>{h1}</h1><p>{lead}</p><ul class="ticks">{li}</ul>'
             f'<p><a class="btn" href="#anfrage">{cta}</a>{how}</p></div></section>\n')
 
@@ -226,23 +212,28 @@ def request(h2, intro, needs, note):
             f'<p><a class="btn" href="{TEL}">04298 41 0 42</a> <a class="btn" href="mailto:{MAIL}">E-Mail schreiben</a></p>\n</div></section>\n')
 
 def _a(href, text, cur=False): return f'<a href="{href}"' + (' aria-current="page"' if cur else "") + f">{text}</a>"
-def snav(slug):
-    if slug in AREAS:
-        d = AREAS[slug]; items = [_a(f"/{slug}.html", d["title"], True)] + [_a(f"/{gp(slug, g)}.html", g[1]) for g in d["groups"]]
-    elif slug in GROUPPAGES:
-        a, g0 = GROUPPAGES[slug]; d = AREAS[a]
-        items = [_a(f"/{a}.html", d["title"])] + [_a(f"/{gp(a, g)}.html", g[1], g is g0) for g in d["groups"]]
+SNAVM = "<!--SNAV-->"  # Platzhalter: wird je Seite durch snav() ersetzt
+def snav(a, g=None, leaf=None):
+    d = AREAS[a]
+    if leaf:
+        items = [f'<span>{_a(f"/{a}.html", d["title"])}' + (f' › {_a(f"/{gp(a, c)}.html", c[1])}' if c[2] is not None else f" › {c[1]}") + "</span>" for c in CRUMBS[(a, leaf)]]
     else:
-        items = []
-        for a, g in CRUMBS.get(slug, []):
-            t = _a(f"/{a}.html", AREAS[a]["title"]) + (f" › {_a('/' + gp(a, g) + '.html', g[1])}" if g[2] is not None else f" › {g[1]}")
-            items.append(f"<span>{t}</span>")
+        items = [_a(f"/{a}.html", d["title"], g is None)] + [_a(f"/{gp(a, x)}.html", x[1], x is g) for x in d["groups"]]
     return f'<div class="subnav" role="navigation" aria-label="Einordnung"><div class="wrap">{"".join(items)}</div></div>\n'
 
-def area_cards(a):
+def tile(href, ico, title): return f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span><h3><a href="{href}">{title}</a></h3></li>'
+def grid(tiles): return f'<ul class="cards cards-services">{"".join(tiles)}</ul>'
+def area_cards(a):  # Ebene 2: nur die Überschriften der Gruppen
     d = AREAS[a]
-    li = "".join(tile(a, g) for g in d["groups"])
-    return sec(f"Leistungen im Bereich {d['title']}", f'<ul class="cards cards-services">{li}</ul>')
+    return sec(f"Leistungen im Bereich {d['title']}", grid(tile(f"/{gp(a, g)}.html", GROUP_ICON[g[0]], g[1]) for g in d["groups"]))
+def group_body(a, g):  # Ebene 3: Kacheln der Unterpunkte, bei Sanierung je Überschrift
+    out = ""
+    flat = [n for n in g[2] if isinstance(n, str) or n[0] in LEAF_TITLES]
+    heads = [n for n in g[2] if not (isinstance(n, str) or n[0] in LEAF_TITLES)]
+    if flat: out += sec("Leistungen", grid(tile(f"/{lp(a, s)}.html", LEAF_ICON[s], LEAF_TITLES[s]) for s in leaves(flat)))
+    for i, (h, kids) in enumerate(heads):
+        out += sec(h, grid(tile(f"/{lp(a, s)}.html", LEAF_ICON[s], LEAF_TITLES[s]) for s in leaves(kids)), alt=(i % 2 == 0))
+    return out
 
 def contact(h2):
     return (f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>{h2}</h2>\n<p>Schreiben Sie uns oder rufen Sie an.</p>\n'
@@ -256,17 +247,17 @@ REQ = lambda h2: request(h2, "Wir melden uns mit Rückfragen oder mit Machbarkei
 
 ORDER = steps([
     ("Reinigen", "Schaumstoffmolch mit Druckluft, so oft, bis er sauber austritt. Ohne Wasser, damit das Rohr trocken bleibt."),
-    ("Dichtheitsprüfung", 'Dichtheitsprüfung mit Luft, Prüfverfahren und Prüfdruck nach Vorgabe des Auftraggebers. <a href="/din-en-1610.html">Zur Dichtheitsprüfung</a>'),
-    ("Kalibrieren", 'Kalibrierdorn mit Treibmolch, Nachweis der Profilfreiheit nach vereinbartem Kalibermaß. <a href="/kalibrierung.html">Zur Kalibrierung</a>'),
+    ("Dichtheitsprüfung", 'Dichtheitsprüfung mit Luft, Prüfverfahren und Prüfdruck nach Vorgabe des Auftraggebers. <a href="/L/din-en-1610.html">Zur Dichtheitsprüfung</a>'),
+    ("Kalibrieren", 'Kalibrierdorn mit Treibmolch, Nachweis der Profilfreiheit nach vereinbartem Kalibermaß. <a href="/L/rohrkalibrierung.html">Zur Kalibrierung</a>'),
     ("Seileinzug", "Zugseil am Treibmolch, im selben Durchgang wie die Kalibrierung. Beide Enden gekennzeichnet."),
-    ("Inspektion", 'Optional, wenn sichtbar werden soll, wie das Rohr innen aussieht. <a href="/dreh-schwenkkopf-kamera.html">Zur Inspektion</a>'),
+    ("Inspektion", 'Optional, wenn sichtbar werden soll, wie das Rohr innen aussieht. <a href="/L/dreh-schwenkkopf-kamera.html">Zur Inspektion</a>'),
 ])
 ORDER_TXT = ("<p>Gereinigt wird zuerst. Ein Dorn, der an einem Sandpolster stehen bleibt, liefert einen Befund, der keiner ist, und eine Blase dichtet auf Sediment nicht ab.</p>"
     "<p>Die Einbauanleitung A 535b des Kunststoffrohrverbands sieht die Kalibrierung „nach Abschluss der Dichtheitsprüfung“ vor. Das Zugseil ziehen wir ebenfalls erst nach der Druckprüfung ein, weil ein Seil im Rohr die Abdichtung der Prüfblase stören würde.</p>"
     "<p>Verlangt Ihr Leistungsverzeichnis, vor der Druckprüfung zu kalibrieren, laufen Kalibrierung und Seileinzug in getrennten Durchgängen.</p>")
 NOT = lambda keine: (f"<h3>Keine Aussage zu</h3>{ul(keine)}"
     "<p>Die Kalibrierung weist den freien Querschnitt nach.</p><p>Ob das Rohr dicht ist, zeigt die Druckprüfung.</p><p>Die Molchreinigung trägt Material aus, bis der Molch sauber austritt.</p><p><strong>Keine dieser Leistungen ersetzt eine der anderen.</strong></p>")
-CAM = '<a href="/dreh-schwenkkopf-kamera.html">Inspektion</a>'
+CAM = '<a href="/L/dreh-schwenkkopf-kamera.html">Inspektion</a>'
 EYE = "Kabelschutzrohre · Leerrohranlagen"
 NR = ("<h3>Rohrnummerierung</h3><p>Vor Arbeitsbeginn legen wir mit Ihnen fest, wie die Rohre an beiden Enden des Rohrzugs nummeriert werden, mit Blickrichtung und Nullpunkt.</p>")
 
@@ -419,7 +410,7 @@ RT_KAMERA = (
         ("Findet die Kamera jede Undichtigkeit?", "Nein, und das sagen wir vorab. Wir sehen, was optisch sichtbar ist. Eine offene oder verschobene Muffe, ein Spalt, ein Riss, eindringendes Wasser oder Bodenmaterial sind zuverlässig erkennbar. Ein Haarriss in der Rohrwand, eine Undichtigkeit hinter der Dichtung oder eine Stelle, die unter stehendem Wasser liegt, kann eine Kamera dagegen nicht sicher zeigen. In solchen Fällen grenzen wir mit dem Bild den Bereich ein, statt ihn zu beweisen. Die abschließende Bewertung bleibt bei Ihrer Prüfstelle."),
         ("Funktioniert das auch bei Wasser oder Ablagerungen im Rohr?", "Ja. Stehendes Wasser und eingeschwemmtes Sediment gehören selbst zu den Befunden, die wir dokumentieren. Wasser allein ist kein Hindernis: Die Kamera arbeitet auch unter Wasser, und solange das Wasser klar ist, sehen wir die Rohrwand darunter. Die Grenze ist die Sicht, nicht die Nässe. Trübes Wasser oder aufgewühltes Sediment verdecken den Bereich. Ist die Leitung vorher gereinigt oder gemolcht worden, wird das Ergebnis deutlich aussagekräftiger. Ob sich eine Befahrung im vorliegenden Zustand lohnt, klären wir vorab am Telefon."),
         ("Misst die Kamerabefahrung auch Wandstärke oder Korrosion?", "Nein. Die Kamerabefahrung ist ein optisches Verfahren. Sie dokumentiert die sichtbare Innenfläche (Schweißnähte, Risse, Riefen, Verformung, Ablagerungen, Fremdkörper, Wassereintritt). Wandstärken- oder Metallverlust-Messung ist Sache anderer Messverfahren."),
-        ("Ersetzt das die Kalibrierung oder Druckprüfung?", 'Nein. <a href="/kalibrierung.html">Kalibrierung</a> und <a href="/din-en-1610.html">Druckprüfung</a> bleiben für Querschnitt und Dichtheit zuständig, beides übernehmen wir ebenfalls. Die Kamera zeigt Ihnen, wie es im Rohr tatsächlich aussieht, und verortet die Stelle.'),
+        ("Ersetzt das die Kalibrierung oder Druckprüfung?", 'Nein. <a href="/L/rohrkalibrierung.html">Kalibrierung</a> und <a href="/L/din-en-1610.html">Druckprüfung</a> bleiben für Querschnitt und Dichtheit zuständig, beides übernehmen wir ebenfalls. Die Kamera zeigt Ihnen, wie es im Rohr tatsächlich aussieht, und verortet die Stelle.'),
         ("Welche Voraussetzungen muss die Leitung erfüllen?", "Die Leitung sollte außer Betrieb, befahrbar und im Wesentlichen frei von stehendem Wasser und losem Material sein, mit Zugang an den Rohrenden. Ist gemolcht oder gereinigt worden, ist das ideal. Die Machbarkeit, auch bei Bögen, stimmen wir vorab ab."),
         ("Was bekommen wir geliefert – in welchem Format?", "Sie erhalten die Aufnahmen der Fahrt samt der gezielten Schwenkaufnahmen je Fundstelle und eine Befundliste mit Positionsangabe. Was für Ihren Fall sinnvoll ist, klären wir vorab."),
         ("Gibt es ein Live-Bild während der Befahrung?", "Ja. Das Bild wird live übertragen, Befunde lassen sich direkt vor Ort mit Ihrer Bauleitung bewerten."),
@@ -431,7 +422,7 @@ RT_KAMERA = (
               "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
 
 RT_REINIGUNG = (
-    snav("sehende-duese") + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Hausanschlussleitungen</p><h1>Reinigung unter optischer Kontrolle</h1>'
+    SNAVM + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Hausanschlussleitungen</p><h1>Reinigung unter optischer Kontrolle</h1>'
     '<p><strong>Reinigen und dabei zusehen.</strong> Eine lenkbare Spüleinheit mit Kamera im Spülkopf, die „sehende Düse“, verbindet Hochdruckreinigung und optische Inspektion in einem Arbeitsgang. So sehen wir während der Reinigung, was im Haupt- und im Anschlusskanal passiert.</p>'
     '<ul class="ticks"><li>Reinigungsergebnis direkt im Bild geprüft</li><li>Abbiegen in Anschlussleitungen vom Hauptkanal aus</li></ul>'
     '<p><a class="btn" href="#anfrage">Reinigung anfragen</a> <a class="btn ghost" href="#vorteile">Ihre Vorteile</a></p></div></section>\n'
@@ -463,7 +454,7 @@ RT_REINIGUNG = (
         '<li class="card"><h3>Probleme früh erkennen</h3><p>Die Aufnahmen zeigen mögliche Schwachstellen, bevor sie zu einem Schaden werden.</p></li></ul>',
         alt=True, eyebrow="Ihre Vorteile")
     + sec("Reinigung und Inspektion aus einer Hand.",
-        '<p>Zeigt die Reinigung einen Befund, der genauer untersucht werden soll, schließt sich die <a href="/dreh-schwenkkopf-kamera.html">Inspektion</a> an. Ob eine Leitung danach dicht ist, klärt die <a href="/din-en-1610.html">Dichtheitsprüfung</a>.</p>',
+        '<p>Zeigt die Reinigung einen Befund, der genauer untersucht werden soll, schließt sich die <a href="/L/dreh-schwenkkopf-kamera.html">Inspektion</a> an. Ob eine Leitung danach dicht ist, klärt die <a href="/L/din-en-1610.html">Dichtheitsprüfung</a>.</p>',
         eyebrow="Zusammenspiel")
     + request("Reinigung anfragen",
               "Schildern Sie uns die Leitung. Wir melden uns mit Rückfragen oder mit Machbarkeit und Angebot.",
@@ -473,7 +464,7 @@ RT_REINIGUNG = (
               "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
 
 RT_HOCHDRUCK = (
-    snav("wasserhoechstdruckfraesen")
+    SNAVM
     + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Spezialreinigung</p><h1>Höchstdruck-Wasserstrahlen</h1>'
     '<p><strong>Wenn Spülen nicht mehr reicht.</strong> Harte Ablagerungen, Einwüchse und Fremdkörper im Kanal tragen wir mit einem kamerageführten Wasserstrahl-Roboter ab, per Fernsteuerung und unter Live-Bild.</p>'
     '<ul class="ticks"><li>Druck und Fahrgeschwindigkeit am Roboter einstellbar</li><li>Live-Bild während des Abtrags</li><li>Auch zur Vorbereitung einer Sanierung</li></ul>'
@@ -505,7 +496,7 @@ RT_HOCHDRUCK = (
         '<li class="card"><h3>Sauber getrennt</h3><p>Eingesetzt werden Wasser und Abrasivmittel, die sich getrennt auffangen und umweltgerecht entsorgen lassen.</p></li></ul>',
         eyebrow="Ihre Vorteile")
     + sec("Das richtige Verfahren für Ihre Haltung.",
-        '<p>Ist die Leitung nur verschmutzt, genügt oft Saugen und Spülen. Müssen Anschlussleitungen gezielt unter Sicht gereinigt werden, hilft die <a href="/sehende-duese.html">Reinigung unter optischer Kontrolle</a>. Der Wasserstrahl-Roboter kommt dazu, wenn harte Beläge, Einwüchse oder Fremdkörper entfernt werden müssen. Danach folgt bei Bedarf die <a href="/dreh-schwenkkopf-kamera.html">Inspektion</a> oder die <a href="/din-en-1610.html">Dichtheitsprüfung</a>.</p>',
+        '<p>Ist die Leitung nur verschmutzt, genügt oft Saugen und Spülen. Müssen Anschlussleitungen gezielt unter Sicht gereinigt werden, hilft die <a href="/L/sehende-duese.html">Reinigung unter optischer Kontrolle</a>. Der Wasserstrahl-Roboter kommt dazu, wenn harte Beläge, Einwüchse oder Fremdkörper entfernt werden müssen. Danach folgt bei Bedarf die <a href="/L/dreh-schwenkkopf-kamera.html">Inspektion</a> oder die <a href="/L/din-en-1610.html">Dichtheitsprüfung</a>.</p>',
         alt=True, eyebrow="Einordnung")
     + request("Einsatz anfragen",
               "Schildern Sie uns die Haltung. Wir melden uns mit Rückfragen oder mit Machbarkeit und Angebot.",
@@ -528,37 +519,54 @@ PAGES = {
     "datenschutz": ("Datenschutz – IGK Abwassertechnik GmbH", "Datenschutzerklärung der IGK Abwassertechnik GmbH", legal("", "datenschutz")),
 }
 
-# Bereichs-, Gruppen- und Platzhalterseiten aus der Struktur
+# Bereichs-, Gruppen- und Unterpunktseiten je Bereich aus der Struktur
+PAGE_AREA = {}   # Seite -> Bereich (steuert die Navigation oben rechts)
+NOINDEX = set()
+def fix(body, a, **kw):
+    body = body.replace(SNAVM, snav(a, **kw))
+    def rep(m):  # /L/<unterpunkt>.html -> Seite im selben Bereich, sonst im anderen
+        t = m.group(1)
+        for x in [a] + [y for y in AREAS if y != a]:
+            if (x, t) in CRUMBS: return f"/{lp(x, t)}.html"
+        return m.group(0)
+    return re.sub(r"/L/([a-z0-9-]+)\.html", rep, body)
+LEAF_PAGE = {}
+for old, new in [("din-en-1610", "din-en-1610"), ("kalibrierung", "rohrkalibrierung"), ("dreh-schwenkkopf-kamera", "dreh-schwenkkopf-kamera"),
+                 ("sehende-duese", "sehende-duese"), ("wasserhoechstdruckfraesen", "wasserhoechstdruckfraesen")]:
+    LEAF_PAGE[new] = PAGES.pop(old)
+kt, kd, kbody = PAGES.pop("kabelschutzrohre")
+PAGES["kabelschutzrohre"] = (kt, kd, fix(kbody, "kabelschutzrohre")); PAGE_AREA["kabelschutzrohre"] = "kabelschutzrohre"
 PAGES["wasser"] = ("Wasser – IGK Abwassertechnik GmbH", "Abwasser- und Regenwasserleitungen: Inspektion, Reinigung, Dichtheitsprüfung, Kalibrierung und Sanierung",
     snav("wasser") + f'<section class="hero"><div class="wrap"><p class="eyebrow">Leistungen</p><h1>Wasser</h1><p>{AREAS["wasser"]["lead"]}</p></div></section>\n'
-    + area_cards("wasser") + contact("Anfrage zu Wasser"))
+    + area_cards("wasser") + contact("Anfrage zu Wasser")); PAGE_AREA["wasser"] = "wasser"
 for slug, (a, g) in GROUPPAGES.items():
     d = AREAS[a]
     PAGES[slug] = (f"{g[1]} – {d['title']} – IGK Abwassertechnik GmbH", f"{g[1]} für {d['what']} bei der IGK Abwassertechnik GmbH",
-        snav(slug) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{d["title"]}</p><h1>{g[1]}</h1><p>Alle Leistungen im Bereich {g[1]} für {d["what"]}.</p></div></section>\n'
-        + sec("Leistungen", tree_ul(g[2])) + contact(f"{g[1]} anfragen"))
+        snav(a, g=g) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{d["title"]}</p><h1>{g[1]}</h1><p>Alle Leistungen im Bereich {g[1]} für {d["what"]}.</p></div></section>\n'
+        + group_body(a, g) + contact(f"{g[1]} anfragen")); PAGE_AREA[slug] = a
+for (a, s), crumbs in CRUMBS.items():
+    t, d = LEAF_TITLES[s], AREAS[a]
+    if s in LEAF_PAGE:
+        ot, od, body = LEAF_PAGE[s]
+        PAGES[lp(a, s)] = (f"{ot.split(' – ')[0]} – {d['title']} – IGK Abwassertechnik GmbH", od, fix(body, a, leaf=s))
+    else:
+        c = crumbs[0]; eb = d["title"] + ("" if c[2] is None else f" · {c[1]}")
+        PAGES[lp(a, s)] = (f"{t} – {d['title']} – IGK Abwassertechnik GmbH", f"{t}: Beschreibung folgt",
+            snav(a, leaf=s) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1><p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze. Sprechen Sie uns gern direkt an.</p>'
+            f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
+        NOINDEX.add(lp(a, s))
+    PAGE_AREA[lp(a, s)] = a
 def nav_for(name):
     L = '<a href="/#leistungen">Leistungen</a>'
-    if name in AREAS: others = [a for a in AREAS if a != name]
-    elif name in GROUPPAGES: others = [a for a in AREAS if a != GROUPPAGES[name][0]]
-    elif name in LEAF_TITLES:
-        own = {a for a, g in CRUMBS[name]}
-        others = [a for a in AREAS if a not in own] or list(AREAS)
-    else: return L + '\n    <a href="/karriere.html">Karriere</a>\n    <a href="/ansprechpartner.html">Ansprechpartner</a>'
-    return L + "".join(f'\n    <a href="/{a}.html">{AREAS[a]["title"]}</a>' for a in others)
-NOINDEX = set()
-for slug, t in LEAF_TITLES.items():
-    if slug in PAGES: continue
-    a, g = CRUMBS[slug][0]
-    eb = AREAS[a]["title"] + ("" if g[2] is None else f" · {g[1]}")
-    PAGES[slug] = (f"{t} – IGK Abwassertechnik GmbH", f"{t}: Beschreibung folgt",
-        snav(slug) + f'<section class="hero"><div class="wrap"><p class="eyebrow">{eb}</p><h1>{t}</h1><p>Die ausführliche Beschreibung dieser Leistung folgt in Kürze. Sprechen Sie uns gern direkt an.</p>'
-        f'<p><a class="btn" href="#anfrage">Anfrage stellen</a></p></div></section>\n' + contact(f"{t} anfragen"))
-    NOINDEX.add(slug)
+    a = PAGE_AREA.get(name)
+    if a is None: return L + '\n    <a href="/karriere.html">Karriere</a>\n    <a href="/ansprechpartner.html">Ansprechpartner</a>'
+    return L + "".join(f'\n    <a href="/{x}.html">{AREAS[x]["title"]}</a>' for x in AREAS if x != a)
 for name, (t, d, body) in PAGES.items():
     head = HEAD.format(title=t, desc=d, nav=nav_for(name))
     if name in NOINDEX: head = head.replace("</head>", '<meta name="robots" content="noindex">\n</head>')
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
+for f in (R / "site").glob("*.html"):  # veraltete Seiten entfernen
+    if f.stem not in PAGES: f.unlink()
 print("built", list(PAGES))
 
 # GitHub Pages copy (main /docs). ponytail: prefix hardcoded; with custom domain add a CNAME file in repo root -> no prefix.

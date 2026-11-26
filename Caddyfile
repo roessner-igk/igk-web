@@ -4,14 +4,24 @@
 	file_server
 	redir /rohrtechnik /kabelschutzrohre permanent
 	redir /rohrtechnik.html /kabelschutzrohre permanent
-	redir /druckpruefung /din-en-1610 permanent
-	redir /druckpruefung.html /din-en-1610 permanent
-	redir /inspektion /dreh-schwenkkopf-kamera permanent
-	redir /inspektion.html /dreh-schwenkkopf-kamera permanent
-	redir /reinigung /sehende-duese permanent
-	redir /reinigung.html /sehende-duese permanent
-	redir /hochdruck /wasserhoechstdruckfraesen permanent
-	redir /hochdruck.html /wasserhoechstdruckfraesen permanent
+	redir /druckpruefung /kabelschutzrohre-din-en-1610 permanent
+	redir /druckpruefung.html /kabelschutzrohre-din-en-1610 permanent
+	redir /inspektion /kabelschutzrohre-dreh-schwenkkopf-kamera permanent
+	redir /inspektion.html /kabelschutzrohre-dreh-schwenkkopf-kamera permanent
+	redir /kalibrierung /kabelschutzrohre-rohrkalibrierung permanent
+	redir /kalibrierung.html /kabelschutzrohre-rohrkalibrierung permanent
+	redir /reinigung /wasser-sehende-duese permanent
+	redir /reinigung.html /wasser-sehende-duese permanent
+	redir /hochdruck /wasser-wasserhoechstdruckfraesen permanent
+	redir /hochdruck.html /wasser-wasserhoechstdruckfraesen permanent
+	redir /din-en-1610 /kabelschutzrohre-din-en-1610 permanent
+	redir /din-en-1610.html /kabelschutzrohre-din-en-1610 permanent
+	redir /dreh-schwenkkopf-kamera /kabelschutzrohre-dreh-schwenkkopf-kamera permanent
+	redir /dreh-schwenkkopf-kamera.html /kabelschutzrohre-dreh-schwenkkopf-kamera permanent
+	redir /sehende-duese /wasser-sehende-duese permanent
+	redir /sehende-duese.html /wasser-sehende-duese permanent
+	redir /wasserhoechstdruckfraesen /wasser-wasserhoechstdruckfraesen permanent
+	redir /wasserhoechstdruckfraesen.html /wasser-wasserhoechstdruckfraesen permanent
 	header -Server
 	header {
 		X-Content-Type-Options nosniff
