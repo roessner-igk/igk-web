@@ -77,6 +77,7 @@ nav a:not(.btn):hover{color:var(--blue)}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
 address{font-style:normal}
 .social a{margin-right:1rem}
+.customers strong{color:#fff}
 .legal{display:flex;gap:1.5rem;margin-top:2rem;padding-top:1rem;border-top:1px solid #fff3;font-size:.9rem}
 .legal span{margin-right:auto}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
