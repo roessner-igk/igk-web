@@ -573,6 +573,7 @@ for name, (t, d, body) in PAGES.items():
     body = re.sub(r'<section[^>]*id="anfrage".*?</section>\n?', "", body, flags=re.S)  # Anfrage-Rubrik am Seitenende entfällt, Anfrage über Button oben
     body = body.replace('href="#anfrage"', f'href="mailto:{MAIL}"')
     body = re.sub(r'<a class="btn" href="mailto:' + re.escape(MAIL) + r'">[^<]*</a>\s*', "", body)  # keine Anfrage-Buttons im Inhalt
+    body = re.sub(r'<a class="btn ghost" href="#[^"]*">So läuft es ab</a>\s*', "", body)  # kein Sprungbutton im Header-Kasten
     body = re.sub(r'<p>\s*</p>\n?', "", body)
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
 for f in (R / "site").glob("*.html"):  # veraltete Seiten entfernen
