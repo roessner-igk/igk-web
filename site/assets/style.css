@@ -40,13 +40,16 @@ nav a:not(.btn):hover{color:var(--blue)}
 .ico{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--blue)}
 .card h3{margin:1rem 0 .4rem}.card p{margin:0}
 /* Leistungen: gleich breite Kacheln, letzte Reihe mittig */
-.cards-services{display:flex;flex-wrap:wrap;justify-content:center}
-.cards-services .card{flex:0 0 calc((100% - 2*1.25rem)/3);box-sizing:border-box}
-@media(max-width:800px){.cards-services .card{flex-basis:calc((100% - 1.25rem)/2)}}
-@media(max-width:520px){.cards-services .card{flex-basis:100%}}
+.cards-services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
+.cards-services.c2,.cards-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cards-services .card{box-sizing:border-box;min-width:0}
+.cards-services .card h3{white-space:nowrap;font-size:clamp(.95rem,1.9vw,1.2rem)}
+@media(max-width:800px){.cards-services{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.cards-services,.cards-services.c2,.cards-two{grid-template-columns:minmax(0,1fr)}.cards-services .card h3{font-size:1rem}}
 .prose .cards-services{padding:0}
-.cards-two .card{flex-basis:calc((100% - 1.25rem)/2)}
-@media(max-width:520px){.cards-two .card{flex-basis:100%}}
+.wrap.prose:has(>.cards-services){max-width:1100px}
+.cards-services h3{overflow-wrap:normal}
+.section.alt .cards-services .card{background:#fff}
 .card ul{margin:.75rem 0 0;padding-left:1.1rem}.card li ul{margin:.2rem 0 .2rem}
 /* video */
 .split{display:grid;gap:2.5rem;grid-template-columns:1fr 1fr;align-items:center}

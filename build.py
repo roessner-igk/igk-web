@@ -223,7 +223,9 @@ def snav(a, g=None, leaf=None):  # überall im Bereich gleich: Bereich + alle Gr
     return f'<div class="subnav" role="navigation" aria-label="Einordnung"><div class="wrap">{"".join(items)}</div></div>\n'
 
 def tile(href, ico, title): return f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span><h3><a href="{href}">{title}</a></h3></li>'
-def grid(tiles): return f'<ul class="cards cards-services">{"".join(tiles)}</ul>'
+def grid(tiles):
+    tiles = list(tiles)
+    return f'<ul class="cards cards-services{" c2" if len(tiles) in (2, 4) else ""}">{"".join(tiles)}</ul>'
 def area_cards(a):  # Ebene 2: nur die Überschriften der Gruppen
     d = AREAS[a]
     return sec(f"Leistungen im Bereich {d['title']}", grid(tile(f"/{gp(a, g)}.html", GROUP_ICON[g[0]], g[1]) for g in d["groups"]))
