@@ -31,6 +31,7 @@ Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 
 ## Open points before go-live
 - Rohrtechnik pages (`rohrtechnik`, `druckpruefung`, `kalibrierung`, `inspektion`) mirror structure and headings of hexbee.de/rohrtechnik, /kabelschutzrohr-druckpruefung, /kabelschutzrohr-kalibrierung, /rohrinspektion; texts adapted to IGK, no images/form. Left out: ROHRBLICK/Windenkamera product data, HGÜ reference, Haftpflicht/DSGVO claims, Oldenburg/"bundesweit". Client must confirm IGK offers all services (esp. Seileinzug, Kamerabefahrung), norm refs, STLB/Kalibertabelle, and that hexbee texts may be reused (copyright).
+- Seite `reinigung` (Reinigung unter optischer Kontrolle) ist sinngemäß nach canal-control.de/…/die-sehende-duese adaptiert, ohne Bilder, Zahlen (DN-Bereich, Reichweite), Ansprechpartner und Firmenaussagen. Kunde muss bestätigen, dass IGK diese Technik (lenkbare Spüleinheit mit Kamera) anbietet, die Leistungsmerkmale stimmen und der Begriff „sehende Düse“ genutzt werden darf; Texte vor Go-live auf Eigenständigkeit prüfen.
 - Service card texts (Inspektion, Reinigung, Dichtheitsprüfung, Sanierung) and hero subline are drafted, not from the old site – client must confirm.
 - Service icon mapping is a guess (`messung` → Dichtheitsprüfung, `pruefung` → Sanierung).
 - Team photos and video poster are low-res thumbnails from the old TYPO3 site; request originals.

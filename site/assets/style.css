@@ -39,6 +39,11 @@ nav a:not(.btn):hover{color:var(--blue)}
 .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px #00446126}
 .ico{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--blue)}
 .card h3{margin:1rem 0 .4rem}.card p{margin:0}
+/* Leistungen: gleich breite Kacheln, letzte Reihe mittig */
+.cards-services{display:flex;flex-wrap:wrap;justify-content:center}
+.cards-services .card{flex:0 0 calc((100% - 2*1.25rem)/3);box-sizing:border-box}
+@media(max-width:800px){.cards-services .card{flex-basis:calc((100% - 1.25rem)/2)}}
+@media(max-width:520px){.cards-services .card{flex-basis:100%}}
 /* video */
 .split{display:grid;gap:2.5rem;grid-template-columns:1fr 1fr;align-items:center}
 @media(max-width:800px){.split{grid-template-columns:1fr}}

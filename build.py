@@ -61,7 +61,7 @@ SERVICES = [
     ("messung", "Dichtheitsprüfung", "Prüfung von Rohr- und Kanalnetzen auf Dichtheit."),
     ("pruefung", "Sanierung", "Sanierung schadhafter Rohre und Kanäle."),
 ]
-LINKS = {"inspektion": "/inspektion.html", "messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
+LINKS = {"inspektion": "/inspektion.html", "reinigung": "/reinigung.html", "messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
 link = lambda i, t: f'<a href="{LINKS[i]}">{t}</a>' if i in LINKS else t
 cards = "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{i}.svg" alt="" width="40" height="40"></span><h3>{link(i, t)}</h3><p>{d}</p></li>'
@@ -87,7 +87,7 @@ INDEX = f"""<section class="hero">
 </section>
 <section id="leistungen" class="wrap section">
   <h2>Leistungen</h2>
-  <ul class="cards">{cards}</ul>
+  <ul class="cards cards-services">{cards}</ul>
 </section>
 <section class="section alt">
   <div class="wrap split">
@@ -352,11 +352,54 @@ RT_KAMERA = (
                "Anwendungsfeld, zum Beispiel Stromkabel-Schutzrohre, Mantelrohre und Querungen, Glasfaser- und Leerrohre, Industrie- und Prozessrohre", "Ort und geplanter Zeitraum"],
               "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
 
+RT_REINIGUNG = (
+    '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Hausanschlussleitungen</p><h1>Reinigung unter optischer Kontrolle</h1>'
+    '<p><strong>Reinigen und dabei zusehen.</strong> Eine lenkbare Spüleinheit mit Kamera im Spülkopf, die „sehende Düse“, verbindet Hochdruckreinigung und optische Inspektion in einem Arbeitsgang. So sehen wir während der Reinigung, was im Haupt- und im Anschlusskanal passiert.</p>'
+    '<ul class="ticks"><li>Reinigungsergebnis direkt im Bild geprüft</li><li>Abbiegen in Anschlussleitungen vom Hauptkanal aus</li></ul>'
+    '<p><a class="btn" href="#anfrage">Reinigung anfragen</a> <a class="btn ghost" href="#vorteile">Ihre Vorteile</a></p></div></section>\n'
+    + sec("Hochdruckreinigung und Kamera in einem Spülkopf.",
+        "<p>Die sehende Düse ist eine lenkbare Reinigungseinheit mit Kamera und LED-Beleuchtung im Spülkopf. Vom Hauptkanal aus lässt sie sich in verzweigte Hausanschlussleitungen steuern und reinigt dort unter Kamerabeobachtung. Wer die Düse führt, sieht sofort, was die Reinigung bewirkt hat.</p>"
+        "<p>Das Bild zeigt außerdem den Zustand von Haupt- und Anschlusskanal. Trifft die Düse auf ein Hindernis, kann sie mit vermindertem Druck daran vorbeigeführt oder die Reinigung abgebrochen werden. Wo es der Befund verlangt, ist eine auf den Kanalzustand abgestimmte Inspektion möglich. Mehrfach verzweigte Netze lassen sich gezielt reinigen, und zwar mit größerer Reichweite als bei einer Lateralkamera-Befahrung.</p>",
+        eyebrow="Das Verfahren")
+    + sec("Was die Technik leistet.", ul([
+        "Reinigung von Rohren und Kanälen unter direkter Kamerabeobachtung",
+        "Abbiegen in Anschlussleitungen und Stutzen vom Hauptkanal aus, ohne das Grundstück zu betreten",
+        "kontrolliertes Ausweichen bei Hindernissen im Kanal",
+        "hochauflösende Videoaufzeichnung mit Texteinblendung und digitale Fotos",
+        "Meterzähler für Haupt- und Anschlusskanal",
+        "Ortung des gesamten Leitungsverlaufs",
+        "Beleuchtung durch Hochleistungs-LEDs im Spülkopf",
+        "wasserdichter, stoßfester Kamerakopf"])
+        + "<p class=\"note\">Durchmesserbereich und Reichweite hängen von Leitung und Einsatz ab. Die Machbarkeit stimmen wir vorab mit Ihnen ab.</p>",
+        alt=True, eyebrow="Leistungsmerkmale")
+    + sec("Warum Reinigung unter Sicht sinnvoll ist.",
+        '<ul class="cards"><li class="card"><h3>Schäden genau lokalisieren</h3><p>Das Live-Bild zeigt, wo Verstopfung oder Beschädigung sitzen. Wir gehen das Problem gezielt an und sparen Zeit und Aufwand.</p></li>'
+        '<li class="card"><h3>Effizienter arbeiten</h3><p>Der Fortschritt ist in Echtzeit zu verfolgen, das Rohr wird nachweislich vollständig gereinigt. Wiederholte Reinigungsversuche und Ausfallzeiten werden seltener.</p></li>'
+        '<li class="card"><h3>Schäden vermeiden</h3><p>Empfindliche Bereiche sind im Bild erkennbar und werden geschont. Das zählt vor allem bei alten oder bereits geschädigten Leitungen.</p></li>'
+        '<li class="card"><h3>Arbeit nachweisen</h3><p>Bilder und Videos dokumentieren die ausgeführte Arbeit und den Zustand der Leitung.</p></li></ul>',
+        eyebrow="Warum unter Sicht", id="vorteile")
+    + sec("Was Sie davon haben.",
+        '<ul class="cards"><li class="card"><h3>Transparenz</h3><p>Sie sehen, was in Ihrem Rohrsystem passiert, und können die ausgeführte Arbeit nachvollziehen.</p></li>'
+        '<li class="card"><h3>Kosten im Griff</h3><p>Gezielte Reinigung der Problemstellen vermeidet unnötige Arbeiten und damit Kosten.</p></li>'
+        '<li class="card"><h3>Dauerhafte Wirkung</h3><p>Eine gründliche Reinigung senkt das Risiko wiederkehrender Abflussprobleme, Blockaden und Notfälle.</p></li>'
+        '<li class="card"><h3>Probleme früh erkennen</h3><p>Die Aufnahmen zeigen mögliche Schwachstellen, bevor sie zu einem Schaden werden.</p></li></ul>',
+        alt=True, eyebrow="Ihre Vorteile")
+    + sec("Reinigung und Inspektion aus einer Hand.",
+        '<p>Zeigt die Reinigung einen Befund, der genauer untersucht werden soll, schließt sich die <a href="/inspektion.html">Inspektion</a> an. Ob eine Leitung danach dicht ist, klärt die <a href="/druckpruefung.html">Dichtheitsprüfung</a>.</p>',
+        eyebrow="Zusammenspiel")
+    + request("Reinigung anfragen",
+              "Schildern Sie uns die Leitung. Wir melden uns mit Rückfragen oder mit Machbarkeit und Angebot.",
+              ["Art der Leitung: Hauptkanal, Hausanschluss oder verzweigtes Netz", "Werkstoff und Durchmesser, soweit bekannt",
+               "Ungefähre Länge und Zugangspunkte, zum Beispiel Schächte", "Anlass: Verstopfung, Wartung, Vorbereitung einer Inspektion oder noch unklar",
+               "Ort und gewünschter Zeitraum"],
+              "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
+
 PAGES = {
     "rohrtechnik": ("Rohrservice an Kabelschutzrohren – IGK Abwassertechnik GmbH", "Molchreinigung, Druckprüfung, Kalibrierung und Seileinzug an Kabelschutzrohren und Leerrohren", RT_UEBERSICHT),
     "druckpruefung": ("Druckprüfung von Rohrleitungen – IGK Abwassertechnik GmbH", "Dichtheitsprüfung von Rohrleitungen und Kanälen mit Luft nach DIN EN 1610, mit Protokoll je Prüfabschnitt", RT_DRUCK),
     "kalibrierung": ("Kalibrierung von Kabelschutzrohren – IGK Abwassertechnik GmbH", "Nachweis der Profilfreiheit von Kabelschutzrohren vor dem Kabelzug", RT_KALIB),
     "inspektion": ("Inspektion von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
+    "reinigung": ("Reinigung unter optischer Kontrolle – IGK Abwassertechnik GmbH", "Reinigung von Rohren, Kanälen und Hausanschlussleitungen unter Kamerabeobachtung mit lenkbarer Spüleinheit", RT_REINIGUNG),
     "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat", INDEX),
     "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
