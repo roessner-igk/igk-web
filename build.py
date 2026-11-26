@@ -61,7 +61,7 @@ SERVICES = [
     ("messung", "Dichtheitsprüfung", "Prüfung von Rohr- und Kanalnetzen auf Dichtheit."),
     ("pruefung", "Sanierung", "Sanierung schadhafter Rohre und Kanäle."),
 ]
-LINKS = {"inspektion": "/kamerabefahrung.html", "messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
+LINKS = {"inspektion": "/inspektion.html", "messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
 link = lambda i, t: f'<a href="{LINKS[i]}">{t}</a>' if i in LINKS else t
 cards = "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{i}.svg" alt="" width="40" height="40"></span><h3>{link(i, t)}</h3><p>{d}</p></li>'
@@ -142,7 +142,7 @@ legal = lambda h, n: f'<section class="wrap section prose">{FRAG(n)}</section>\n
 import re
 TEL = re.search(r'href="(tel:[^"]+)"', FOOT).group(1)
 MAIL = "info@igk-abwassertechnik.de"
-R_NAV = [("rohrtechnik", "Übersicht"), ("druckpruefung", "Dichtheitsprüfung"), ("kalibrierung", "Kalibrierung"), ("kamerabefahrung", "Kamerabefahrung")]
+R_NAV = [("rohrtechnik", "Übersicht"), ("druckpruefung", "Dichtheitsprüfung"), ("kalibrierung", "Kalibrierung"), ("inspektion", "Inspektion")]
 
 def r_hero(eyebrow, h1, lead, bullets, active, cta, how=None):
     nav = "".join(f'<a href="/{k}.html"' + (' aria-current="page"' if k == active else "") + f">{t}</a>" for k, t in R_NAV)
@@ -183,20 +183,20 @@ ORDER = steps([
     ("Dichtheitsprüfung", 'Dichtheitsprüfung mit Luft, Prüfverfahren und Prüfdruck nach Vorgabe des Auftraggebers. <a href="/druckpruefung.html">Zur Dichtheitsprüfung</a>'),
     ("Kalibrieren", 'Kalibrierdorn mit Treibmolch, Nachweis der Profilfreiheit nach vereinbartem Kalibermaß. <a href="/kalibrierung.html">Zur Kalibrierung</a>'),
     ("Seileinzug", "Zugseil am Treibmolch, im selben Durchgang wie die Kalibrierung. Beide Enden gekennzeichnet."),
-    ("Kamerabefahrung", 'Optional, wenn sichtbar werden soll, wie das Rohr innen aussieht. <a href="/kamerabefahrung.html">Zur Rohrinspektion</a>'),
+    ("Inspektion", 'Optional, wenn sichtbar werden soll, wie das Rohr innen aussieht. <a href="/inspektion.html">Zur Inspektion</a>'),
 ])
 ORDER_TXT = ("<p>Gereinigt wird zuerst. Ein Dorn, der an einem Sandpolster stehen bleibt, liefert einen Befund, der keiner ist, und eine Blase dichtet auf Sediment nicht ab.</p>"
     "<p>Die Einbauanleitung A 535b des Kunststoffrohrverbands sieht die Kalibrierung „nach Abschluss der Dichtheitsprüfung“ vor. Das Zugseil ziehen wir ebenfalls erst nach der Druckprüfung ein, weil ein Seil im Rohr die Abdichtung der Prüfblase stören würde.</p>"
     "<p>Verlangt Ihr Leistungsverzeichnis, vor der Druckprüfung zu kalibrieren, laufen Kalibrierung und Seileinzug in getrennten Durchgängen.</p>")
 NOT = lambda keine: (f"<h3>Keine Aussage zu</h3>{ul(keine)}"
     "<p>Die Kalibrierung weist den freien Querschnitt nach.</p><p>Ob das Rohr dicht ist, zeigt die Druckprüfung.</p><p>Die Molchreinigung trägt Material aus, bis der Molch sauber austritt.</p><p><strong>Keine dieser Leistungen ersetzt eine der anderen.</strong></p>")
-CAM = '<a href="/kamerabefahrung.html">Kamerabefahrung</a>'
+CAM = '<a href="/inspektion.html">Inspektion</a>'
 EYE = "Kabelschutzrohre · Leerrohranlagen"
 NR = ("<h3>Rohrnummerierung</h3><p>Vor Arbeitsbeginn legen wir mit Ihnen fest, wie die Rohre an beiden Enden des Rohrzugs nummeriert werden, mit Blickrichtung und Nullpunkt.</p>")
 
 RT_UEBERSICHT = (
     r_hero(EYE, "Rohrservice an Kabelschutzrohren", "Molchreinigung, Druckprüfung, Kalibrierung und Seileinzug vor dem Kabelzug.",
-           ["Protokoll je Rohrzug", "Zugseil im selben Durchgang wie die Kalibrierung", "Kamerabefahrung auf Wunsch"], "rohrtechnik", "Rohrservice anfragen")
+           ["Protokoll je Rohrzug", "Zugseil im selben Durchgang wie die Kalibrierung", "Inspektion auf Wunsch"], "rohrtechnik", "Rohrservice anfragen")
     + sec("Vier Leistungen am Rohrzug", "<p>Wir reinigen Kabelschutzrohre und Leerrohre, prüfen sie mit Luft auf Dichtheit, weisen die Profilfreiheit nach und ziehen das Zugseil ein. Einzeln oder im selben Einsatz, mit Protokoll je Rohrzug.</p>" + ORDER + ORDER_TXT)
     + sec("Was welche Leistung nachweist", "<p>Die Kalibrierung weist den freien Querschnitt nach.</p><p>Ob das Rohr dicht ist, zeigt die Druckprüfung.</p><p>Die Molchreinigung trägt Material aus, bis der Molch sauber austritt.</p><p><strong>Keine dieser Leistungen ersetzt eine der anderen.</strong></p>", alt=True)
     + f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>Rohrservice anfragen</h2>\n<p>Schreiben Sie uns per E-Mail: <a class="btn" href="mailto:vertrieb@igk-abwassertechnik.de">vertrieb@igk-abwassertechnik.de</a></p>\n</div></section>\n')
@@ -298,9 +298,9 @@ RT_KALIB = (
     + REQ("Kalibrierung anfragen"))
 
 RT_KAMERA = (
-    r_hero("Optische Inline-Inspektion · Rohre & Leitungen", "Das ganze Rohr gesehen. Vom ersten bis zum letzten Meter.",
-           "Wir befahren Rohre und Leitungen optisch. Vor dem Kabeleinzug als lückenloser Nachweis über die ganze Innenfläche. Nach einer auffälligen Druckprüfung als gezielte Ursachensuche, bei der wir die auffällige Stelle anfahren, statt die Trasse aufzugraben.",
-           ["Befund metergenau verortet", "Live-Bild, Bewertung direkt vor Ort"], "kamerabefahrung", "Leitung prüfen lassen", how="ablauf")
+    r_hero("Optische Inline-Inspektion · Rohre & Leitungen", "Inspektion",
+           "<strong>Das ganze Rohr gesehen. Vom ersten bis zum letzten Meter.</strong> Wir befahren Rohre und Leitungen optisch. Vor dem Kabeleinzug als lückenloser Nachweis über die ganze Innenfläche. Nach einer auffälligen Druckprüfung als gezielte Ursachensuche, bei der wir die auffällige Stelle anfahren, statt die Trasse aufzugraben.",
+           ["Befund metergenau verortet", "Live-Bild, Bewertung direkt vor Ort"], "inspektion", "Leitung prüfen lassen", how="ablauf")
     + sec("Zwei Fragen, für die wir ins Rohr fahren.",
         "<p>Der eine Auftrag ist geplant, der andere kommt, wenn etwas nicht stimmt.</p>"
         '<ul class="cards"><li class="card"><p class="eyebrow">Nachweis</p><h3>Ist die Leitung in Ordnung?</h3><p>Vor dem Kabeleinzug, vor der Inbetriebnahme, für die Abnahme.</p><p>Wir fahren die komplette Länge ab und dokumentieren die Innenwand, so dass jede Schweißnaht und jede Auffälligkeit metergenau auffindbar bleibt.</p><p><strong>Lückenloser Sicht-Nachweis über die ganze Trasse</strong></p></li>'
@@ -357,7 +357,7 @@ PAGES = {
     "rohrtechnik": ("Rohrservice an Kabelschutzrohren – IGK Abwassertechnik GmbH", "Molchreinigung, Druckprüfung, Kalibrierung und Seileinzug an Kabelschutzrohren und Leerrohren", RT_UEBERSICHT),
     "druckpruefung": ("Druckprüfung von Rohrleitungen – IGK Abwassertechnik GmbH", "Dichtheitsprüfung von Rohrleitungen und Kanälen mit Luft nach DIN EN 1610, mit Protokoll je Prüfabschnitt", RT_DRUCK),
     "kalibrierung": ("Kalibrierung von Kabelschutzrohren – IGK Abwassertechnik GmbH", "Nachweis der Profilfreiheit von Kabelschutzrohren vor dem Kabelzug", RT_KALIB),
-    "kamerabefahrung": ("Kamerabefahrung von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
+    "inspektion": ("Inspektion von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
     "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat", INDEX),
     "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
