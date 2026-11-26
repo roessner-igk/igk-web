@@ -540,7 +540,7 @@ LEAF_PAGE = {}
 for old, new in [("din-en-1610", "din-en-1610"), ("kalibrierung", "rohrkalibrierung"), ("dreh-schwenkkopf-kamera", "dreh-schwenkkopf-kamera"),
                  ("sehende-duese", "sehende-duese"), ("wasserhoechstdruckfraesen", "wasserhoechstdruckfraesen")]:
     LEAF_PAGE[new] = PAGES.pop(old)
-EMPTY = {"dreh-schwenkkopf-kamera"}  # Text/Inhalt vorerst leer (nur Überschrift)
+EMPTY = {"dreh-schwenkkopf-kamera", "sehende-duese"}  # Text/Inhalt vorerst leer (nur Überschrift)
 for s in EMPTY: LEAF_PAGE.pop(s)
 kt, kd, kbody = PAGES.pop("kabelschutzrohre")
 PAGES["kabelschutzrohre"] = (kt, kd, fix(kbody, "kabelschutzrohre")); PAGE_AREA["kabelschutzrohre"] = "kabelschutzrohre"
