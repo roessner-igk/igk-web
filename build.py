@@ -64,7 +64,7 @@ SERVICES = [
 cards = "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{i}.svg" alt="" width="40" height="40"></span><h3>{t}</h3><p>{d}</p></li>'
     for i, t, d in SERVICES)
-cards += '<li class="card"><span class="ico"><img src="/assets/icons/inspektion.svg" alt="" width="40" height="40"></span><h3><a href="/rohrtechnik.html">Kabelschutzrohre</a></h3><p>Kabelschutzrohre: Molchreinigung, Druckprüfung, Kalibrierung, Seileinzug.</p></li>'
+cards += '<li class="card"><span class="ico"><img src="/assets/icons/inspektion.svg" alt="" width="40" height="40"></span><h3><a href="/rohrtechnik.html">Kabelschutzrohre</a></h3><p>Molchreinigung, Dichtheitsprüfung, Kalibrierung, Seileinzug.</p></li>'
 
 TEAM = [
     ("Thorbjoern_Roessner", "Ing. Thorbjörn Rössner", "Geschäftsführender Gesellschafter · Zertifizierter Kanalsanierungsberater", "Kalkulation, Angebotserstellung und Projektleitung Sanierung"),
