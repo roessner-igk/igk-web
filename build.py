@@ -23,6 +23,7 @@ HEAD = """<!DOCTYPE html>
   <nav>
     {nav}
     <a class="btn" href="tel:+4942984 10 42".replace(" ","")>Anrufen</a>
+    <a class="btn" href="mailto:vertrieb@igk-abwassertechnik.de">Anfrage</a>
   </nav>
 </header>
 <main>
@@ -565,6 +566,8 @@ def nav_for(name):
 for name, (t, d, body) in PAGES.items():
     head = HEAD.format(title=t, desc=d, nav=nav_for(name))
     if name in NOINDEX: head = head.replace("</head>", '<meta name="robots" content="noindex">\n</head>')
+    body = re.sub(r'<section[^>]*id="anfrage".*?</section>\n?', "", body, flags=re.S)  # Anfrage-Rubrik am Seitenende entfällt, Anfrage über Button oben
+    body = body.replace('href="#anfrage"', f'href="mailto:{MAIL}"')
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
 for f in (R / "site").glob("*.html"):  # veraltete Seiten entfernen
     if f.stem not in PAGES: f.unlink()
