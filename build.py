@@ -140,7 +140,7 @@ legal = lambda h, n: f'<section class="wrap section prose">{FRAG(n)}</section>\n
 # Entwurf: nicht übernommen wurden Marken/Gerätenamen, Gerätedaten, Referenzprojekt, Haftpflicht/DSGVO-Aussagen, Bilder, Formular. -> README "Open points".
 import re
 TEL = re.search(r'href="(tel:[^"]+)"', FOOT).group(1)
-MAIL = "info@igk-abwassertechnik.de"
+MAIL = "vertrieb@igk-abwassertechnik.de"  # Anfragen/Angebote
 R_NAV = [("rohrtechnik", "Übersicht"), ("druckpruefung", "Dichtheitsprüfung"), ("kalibrierung", "Kalibrierung"), ("inspektion", "Inspektion")]
 
 def r_hero(eyebrow, h1, lead, bullets, active, cta, how=None):
