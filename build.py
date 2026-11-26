@@ -127,7 +127,7 @@ team = "".join(
 
 INDEX = f"""<section class="hero">
   <div class="wrap">
-    <h1>Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat</h1>
+    <h1>Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Bauunternehmen, Industrie, Kommunen und Privatkunden</h1>
   </div>
 </section>
 <section id="leistungen" class="wrap section">
@@ -513,7 +513,7 @@ PAGES = {
     "dreh-schwenkkopf-kamera": ("Inspektion von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
     "sehende-duese": ("Reinigung unter optischer Kontrolle – IGK Abwassertechnik GmbH", "Reinigung von Rohren, Kanälen und Hausanschlussleitungen unter Kamerabeobachtung mit lenkbarer Spüleinheit", RT_REINIGUNG),
     "wasserhoechstdruckfraesen": ("Höchstdruck-Wasserstrahlen im Kanal – IGK Abwassertechnik GmbH", "Spezialreinigung von Kanälen mit kamerageführtem Wasserstrahl-Roboter: harte Beläge, Einwüchse und Fremdkörper entfernen", RT_HOCHDRUCK),
-    "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat", INDEX),
+    "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Bauunternehmen, Industrie, Kommunen und Privatkunden", INDEX),
     "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
     "impressum": ("Impressum – IGK Abwassertechnik GmbH", "Impressum der IGK Abwassertechnik GmbH", legal("", "impressum")),
