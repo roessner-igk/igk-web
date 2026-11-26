@@ -229,14 +229,8 @@ def grid(tiles):
 def area_cards(a):  # Ebene 2: nur die Überschriften der Gruppen
     d = AREAS[a]
     return sec(f"Leistungen im Bereich {d['title']}", grid(tile(f"/{gp(a, g)}.html", GROUP_ICON[g[0]], g[1]) for g in d["groups"]))
-def group_body(a, g):  # Ebene 3: Kacheln der Unterpunkte, bei Sanierung je Überschrift
-    out = ""
-    flat = [n for n in g[2] if isinstance(n, str) or n[0] in LEAF_TITLES]
-    heads = [n for n in g[2] if not (isinstance(n, str) or n[0] in LEAF_TITLES)]
-    if flat: out += sec("Leistungen", grid(tile(f"/{lp(a, s)}.html", LEAF_ICON[s], LEAF_TITLES[s]) for s in leaves(flat)))
-    for i, (h, kids) in enumerate(heads):
-        out += sec(h, grid(tile(f"/{lp(a, s)}.html", LEAF_ICON[s], LEAF_TITLES[s]) for s in leaves(kids)), alt=(i % 2 == 0))
-    return out
+def group_body(a, g):  # Ebene 3: alle Unterpunkte der Gruppe in einem Raster (ohne Zwischenüberschriften)
+    return sec("Leistungen", grid(tile(f"/{lp(a, s)}.html", LEAF_ICON[s], LEAF_TITLES[s]) for s in leaves(g[2])))
 
 def contact(h2):
     return (f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>{h2}</h2>\n<p>Schreiben Sie uns oder rufen Sie an.</p>\n'
