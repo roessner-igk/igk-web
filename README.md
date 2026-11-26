@@ -30,6 +30,7 @@ Served by Caddy in a container; deployed to Kubernetes via Flux.
 Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 
 ## Open points before go-live
+- Rohrtechnik pages (`rohrtechnik`, `druckpruefung`, `kalibrierung`, `kamerabefahrung`) adapted from hexbee.de/rohrtechnik, no images/form. Texts (norm refs, STLB, Kalibertabelle, "Einsatz bundesweit", Leistungsumfang inkl. Kamerabefahrung) are drafted – client must confirm IGK offers all of it. Contact via phone/mail only; no references or equipment names copied.
 - Service card texts (Inspektion, Reinigung, Dichtheitsprüfung, Sanierung) and hero subline are drafted, not from the old site – client must confirm.
 - Service icon mapping is a guess (`messung` → Dichtheitsprüfung, `pruefung` → Sanierung).
 - Team photos and video poster are low-res thumbnails from the old TYPO3 site; request originals.
