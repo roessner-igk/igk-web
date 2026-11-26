@@ -125,7 +125,6 @@ team = "".join(
 INDEX = f"""<section class="hero">
   <div class="wrap">
     <h1>Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat</h1>
-    <p><a class="btn" href="tel:+494298410042">04298 41 0 42</a> <a class="btn ghost" href="mailto:info@igk-abwassertechnik.de">E-Mail schreiben</a></p>
   </div>
 </section>
 <section id="leistungen" class="wrap section">
@@ -205,6 +204,7 @@ def tbl(head, rows, cap=""):
             + (f'<p class="note">{cap}</p>' if cap else ""))
 def faq(items): return "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in items)
 def cta_band(h2, text, btn):
+    return ""  # Anfrage-Bänder entfallen (Anfrage über Button im Header)
     return (f'<section class="section"><div class="wrap prose"><h2>{h2}</h2><p>{text}</p>'
             f'<p><a class="btn" href="#anfrage">{btn}</a> <a class="btn" href="{TEL}">04298 41 0 42</a></p></div></section>\n')
 def request(h2, intro, needs, note):
@@ -568,6 +568,8 @@ for name, (t, d, body) in PAGES.items():
     if name in NOINDEX: head = head.replace("</head>", '<meta name="robots" content="noindex">\n</head>')
     body = re.sub(r'<section[^>]*id="anfrage".*?</section>\n?', "", body, flags=re.S)  # Anfrage-Rubrik am Seitenende entfällt, Anfrage über Button oben
     body = body.replace('href="#anfrage"', f'href="mailto:{MAIL}"')
+    body = re.sub(r'<a class="btn" href="mailto:' + re.escape(MAIL) + r'">[^<]*</a>\s*', "", body)  # keine Anfrage-Buttons im Inhalt
+    body = re.sub(r'<p>\s*</p>\n?', "", body)
     (R / "site" / f"{name}.html").write_text(head + body + FOOT)
 for f in (R / "site").glob("*.html"):  # veraltete Seiten entfernen
     if f.stem not in PAGES: f.unlink()
