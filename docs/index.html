@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IGK Abwassertechnik – Rohr- und Kanaldienstleistungen</title>
+<meta name="description" content="Rohr- und Kanaldienstleistungen für Kommunen, Industrie und Privat">
+<link rel="icon" href="/igk-web/assets/icons/favicon.ico">
+<link rel="preload" href="/igk-web/assets/fonts/Inter/Inter-roman-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/igk-web/assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="/igk-web/"><img src="/igk-web/assets/images/logo.png" alt="IGK Abwassertechnik" width="120" height="59"></a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Menü">
+  <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
+  <nav>
+    <a href="/igk-web/#leistungen">Leistungen</a>
+    <a href="/igk-web/karriere.html">Karriere</a>
+    <a href="/igk-web/ansprechpartner.html">Ansprechpartner</a>
+    <a class="btn" href="tel:+494298410042">Anrufen</a>
+  </nav>
+</header>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <h1>Rohr- und Kanaldienstleistungen für Kommunen, Industrie und Privat</h1>
+    <p>Damit die Rohre unter unseren Straßen sauber und dicht sind.</p>
+    <p><a class="btn" href="tel:+494298410042">04298 41 0 42</a> <a class="btn ghost" href="mailto:info@igk-abwassertechnik.de">E-Mail schreiben</a></p>
+  </div>
+</section>
+<section id="leistungen" class="wrap section">
+  <h2>Leistungen</h2>
+  <ul class="cards"><li class="card"><span class="ico"><img src="/igk-web/assets/icons/inspektion.svg" alt="" width="40" height="40"></span><h3>Inspektion</h3><p>Kanal- und Rohrinspektion mit Kameratechnik.</p></li><li class="card"><span class="ico"><img src="/igk-web/assets/icons/reinigung.svg" alt="" width="40" height="40"></span><h3>Reinigung</h3><p>Saugen, Spülen und Fräsen von Rohren und Kanälen.</p></li><li class="card"><span class="ico"><img src="/igk-web/assets/icons/messung.svg" alt="" width="40" height="40"></span><h3>Dichtheitsprüfung</h3><p>Prüfung von Rohr- und Kanalnetzen auf Dichtheit.</p></li><li class="card"><span class="ico"><img src="/igk-web/assets/icons/pruefung.svg" alt="" width="40" height="40"></span><h3>Sanierung</h3><p>Sanierung schadhafter Rohre und Kanäle.</p></li></ul>
+</section>
+<section class="section alt">
+  <div class="wrap split">
+    <div>
+      <h2>Gemeinsam unterwegs</h2>
+      <p>Damit die Rohre unter unseren Straßen sauber und dicht sind, wird gesaugt, gespült und Kanäle frei gefräst. Zwanzig Jahre sind Holger Plug und Marko Koch bereits im Abwasser-Bereich im Einsatz, für die RTL Nord-Rubrik „Kim kommt rum“ durfte Kim die Abwassertechnik in Stade einen Tag begleiten und mit anpacken.</p>
+    </div>
+    <figure class="video" id="video">
+      <img src="/igk-web/assets/images/video-poster.jpg" alt="Vorschaubild: Regionalreporterin Kim unterwegs mit der Kanalreinigung in Stade" loading="lazy">
+      <button type="button" data-yt="_mxT_luLteM">&#9654; Video abspielen</button>
+      <figcaption>Mit einem Klick auf dieses Video akzeptieren Sie den Datenaustausch mit YouTube. Lesen Sie dazu auch unsere <a href="/igk-web/datenschutz.html">Datenschutzbestimmungen</a>.</figcaption>
+    </figure>
+  </div>
+</section>
+<section class="wrap section cta">
+  <h2>Karriere bei IGK</h2>
+  <p>Werden Sie Teil unseres Teams.</p>
+  <a class="btn" href="/igk-web/karriere.html">Offene Stellen</a>
+</section>
+<script>
+document.querySelector('[data-yt]').addEventListener('click', e => {
+  const f = document.createElement('iframe');
+  f.src = 'https://www.youtube-nocookie.com/embed/' + e.target.dataset.yt + '?autoplay=1';
+  f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
+  f.title = 'Regionalreporterin Kim unterwegs mit der Kanalreinigung in Stade';
+  document.getElementById('video').replaceChildren(f);
+});
+</script>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <address>
+      <strong>IGK Abwassertechnik GmbH</strong><br>
+      Goebelstraße 38<br>28865 Lilienthal
+    </address>
+    <p>
+      T <a href="tel:+494298410042">04298 41 0 42</a><br>
+      F 04298 41 0 44<br>
+      <a href="mailto:info@igk-abwassertechnik.de">info@igk-abwassertechnik.de</a>
+    </p>
+    <p class="social">
+      <a href="https://de.linkedin.com/company/igk-abwassertechnik" rel="noopener">LinkedIn</a>
+      <a href="https://instagram.com/igk_abwassertechnik" rel="noopener">Instagram</a>
+      <a href="https://m.facebook.com/igk.abwassertechnik" rel="noopener">Facebook</a>
+    </p>
+  </div>
+  <div class="wrap legal"><span>&copy; IGK Abwassertechnik GmbH</span><a href="/igk-web/impressum.html">Impressum</a><a href="/igk-web/datenschutz.html">Datenschutz</a></div>
+</footer>
+</body>
+</html>

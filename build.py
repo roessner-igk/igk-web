@@ -142,3 +142,17 @@ PAGES = {
 for name, (t, d, body) in PAGES.items():
     (R / "site" / f"{name}.html").write_text(HEAD.format(title=t, desc=d) + body + FOOT)
 print("built", list(PAGES))
+
+# GitHub Pages copy (main /docs). ponytail: prefix hardcoded; with custom domain add a CNAME file in repo root -> no prefix.
+import re, shutil
+BASE = "" if (R / "CNAME").exists() else "/igk-web"
+shutil.rmtree(R / "docs", ignore_errors=True)
+shutil.copytree(R / "site", R / "docs")
+for f in (R / "docs").rglob("*"):
+    if f.suffix in (".html", ".css"):
+        s = f.read_text()
+        s = re.sub(r'(href|src)="/(?!/)', rf'\1="{BASE}/', s).replace("url(/", f"url({BASE}/")
+        f.write_text(s)
+(R / "docs" / ".nojekyll").touch()
+if BASE == "":
+    shutil.copy(R / "CNAME", R / "docs" / "CNAME")

@@ -39,7 +39,6 @@ Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 - Old site had no ingress/domain setup for production: see `AGENTS.md` → "Go-live".
 
 ## GitHub Pages
-`.github/workflows/pages.yml` deploys `site/` on every push to `main`.
-- Interim: https://roessner-igk.github.io/igk-web/ (workflow rewrites root paths to `/igk-web/`).
-- Custom domain: add file `CNAME` (repo root, one line: domain), set the domain in Settings → Pages, point DNS (CNAME `www` → `samheyna.github.io`, apex A records per GitHub docs). With `CNAME` present, no path rewrite.
-- One-time: Settings → Pages → Source = "GitHub Actions".
+Source: Settings → Pages → branch `main`, folder `/docs`. `build.py` writes `docs/` (copy of `site/`, root paths prefixed `/igk-web`). Commit `docs/` with `site/`.
+- Interim: https://roessner-igk.github.io/igk-web/
+- Custom domain: add file `CNAME` (repo root, one line: domain), run `python3 build.py` (no prefix then), set domain in Settings → Pages, point DNS (CNAME `www` → `roessner-igk.github.io`, apex A records per GitHub docs).
