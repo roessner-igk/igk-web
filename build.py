@@ -124,7 +124,6 @@ team = "".join(
 INDEX = f"""<section class="hero">
   <div class="wrap">
     <h1>Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat</h1>
-    <p>Damit die Rohre unter unseren Straßen sauber und dicht sind.</p>
     <p><a class="btn" href="tel:+494298410042">04298 41 0 42</a> <a class="btn ghost" href="mailto:info@igk-abwassertechnik.de">E-Mail schreiben</a></p>
   </div>
 </section>
