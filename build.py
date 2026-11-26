@@ -213,12 +213,13 @@ def request(h2, intro, needs, note):
 
 def _a(href, text, cur=False): return f'<a href="{href}"' + (' aria-current="page"' if cur else "") + f">{text}</a>"
 SNAVM = "<!--SNAV-->"  # Platzhalter: wird je Seite durch snav() ersetzt
-def snav(a, g=None, leaf=None):
+def snav(a, g=None, leaf=None):  # überall im Bereich gleich: Bereich + alle Gruppen; aktuelle Gruppe(n) markiert
     d = AREAS[a]
-    if leaf:
-        items = [f'<span>{_a(f"/{a}.html", d["title"])}' + (f' › {_a(f"/{gp(a, c)}.html", c[1])}' if c[2] is not None else f" › {c[1]}") + "</span>" for c in CRUMBS[(a, leaf)]]
-    else:
-        items = [_a(f"/{a}.html", d["title"], g is None)] + [_a(f"/{gp(a, x)}.html", x[1], x is g) for x in d["groups"]]
+    here = [g] if g else (CRUMBS.get((a, leaf), []) if leaf else [])
+    items = [_a(f"/{a}.html", d["title"], g is None and leaf is None)]
+    for x in d["groups"]:
+        cur = any(x is y for y in here)
+        items.append(f'<a href="/{gp(a, x)}.html"' + (' aria-current="page"' if cur and (g is x or x[2] is None) else ' aria-current="true"' if cur else "") + f">{x[1]}</a>")
     return f'<div class="subnav" role="navigation" aria-label="Einordnung"><div class="wrap">{"".join(items)}</div></div>\n'
 
 def tile(href, ico, title): return f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span><h3><a href="{href}">{title}</a></h3></li>'
@@ -559,8 +560,8 @@ for (a, s), crumbs in CRUMBS.items():
 def nav_for(name):
     L = '<a href="/#leistungen">Leistungen</a>'
     a = PAGE_AREA.get(name)
-    if a is None: return L + '\n    <a href="/karriere.html">Karriere</a>\n    <a href="/ansprechpartner.html">Ansprechpartner</a>'
-    return L + "".join(f'\n    <a href="/{x}.html">{AREAS[x]["title"]}</a>' for x in AREAS if x != a)
+    others = "".join(f'\n    <a href="/{x}.html">{AREAS[x]["title"]}</a>' for x in AREAS if a and x != a)
+    return L + others + '\n    <a href="/karriere.html">Karriere</a>\n    <a href="/ansprechpartner.html">Ansprechpartner</a>'
 for name, (t, d, body) in PAGES.items():
     head = HEAD.format(title=t, desc=d, nav=nav_for(name))
     if name in NOINDEX: head = head.replace("</head>", '<meta name="robots" content="noindex">\n</head>')
