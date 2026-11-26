@@ -112,10 +112,21 @@ def tree_ul(nodes):
         head = f'<a href="/{s}.html">{LEAF_TITLES[s]}</a>' if s in LEAF_TITLES else f"<strong>{s}</strong>"
         out += "<li>" + head + (tree_ul(kids) if kids else "") + "</li>"
     return "<ul>" + out + "</ul>"
+GROUP_META = {  # Gruppe -> (Icon, Kurztext). Texte Inspektion/Reinigung/Dichtheitsprüfung/Sanierung aus der alten Kachelansicht; Kalibrierung/Seileinzug neu (Entwurf).
+    "inspektion": ("inspektion", "Kanal- und Rohrinspektion mit Kameratechnik."),
+    "reinigung": ("reinigung", "Saugen, Spülen und Fräsen von Rohren und Kanälen."),
+    "dichtheitspruefung": ("messung", "Prüfung von Rohr- und Kanalnetzen auf Dichtheit."),
+    "kalibrierung": ("kalibrierung", "Nachweis der Profilfreiheit von Rohren."),
+    "seileinzug": ("seileinzug", "Einziehen des Zugseils in das Rohr."),
+    "sanierung": ("pruefung", "Sanierung schadhafter Rohre und Kanäle."),
+}
+def tile(a, g, kids=True):
+    ico, txt = GROUP_META[g[0]]
+    return (f'<li class="card"><span class="ico"><img src="/assets/icons/{ico}.svg" alt="" width="40" height="40"></span>'
+            f'<h3><a href="/{gp(a, g)}.html">{g[1]}</a></h3><p>{txt}</p>' + (tree_ul(g[2]) if kids and g[2] else "") + "</li>")
 cards = "".join(
-    f'<li class="card"><h3><a href="/{a}.html">{d["title"]}</a></h3><p>{d["lead"]}</p><ul>'
-    + "".join(f'<li><a href="/{gp(a, g)}.html">{g[1]}</a></li>' for g in d["groups"]) + "</ul></li>"
-    for a, d in AREAS.items())
+    f'<h3 class="area"><a href="/{a}.html">{d["title"]}</a></h3><ul class="cards cards-services">'
+    + "".join(tile(a, g, kids=False) for g in d["groups"]) + "</ul>" for a, d in AREAS.items())
 
 TEAM = [
     ("Thorbjoern_Roessner", "Ing. Thorbjörn Rössner", "Geschäftsführender Gesellschafter · Zertifizierter Kanalsanierungsberater", "Kalkulation, Angebotserstellung und Projektleitung Sanierung"),
@@ -136,7 +147,7 @@ INDEX = f"""<section class="hero">
 </section>
 <section id="leistungen" class="wrap section">
   <h2>Leistungen</h2>
-  <ul class="cards cards-areas">{cards}</ul>
+  {cards}
 </section>
 <section class="section alt">
   <div class="wrap split">
@@ -233,8 +244,8 @@ def snav(slug):
 
 def area_cards(a):
     d = AREAS[a]
-    li = "".join(f'<li class="card"><h3>{_a("/" + gp(a, g) + ".html", g[1])}</h3>{tree_ul(g[2]) if g[2] else ""}</li>' for g in d["groups"])
-    return sec(f"Leistungen im Bereich {d['title']}", f'<ul class="cards">{li}</ul>')
+    li = "".join(tile(a, g) for g in d["groups"])
+    return sec(f"Leistungen im Bereich {d['title']}", f'<ul class="cards cards-services">{li}</ul>')
 
 def contact(h2):
     return (f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>{h2}</h2>\n<p>Schreiben Sie uns oder rufen Sie an.</p>\n'
