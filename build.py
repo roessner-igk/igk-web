@@ -469,7 +469,7 @@ RT_HOCHDRUCK = (
     + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Spezialreinigung</p><h1>Höchstdruck-Wasserstrahlen</h1>'
     '<p><strong>Wenn Spülen nicht mehr reicht.</strong> Harte Ablagerungen, Einwüchse und Fremdkörper im Kanal tragen wir mit einem kamerageführten Wasserstrahl-Roboter ab, per Fernsteuerung und unter Live-Bild.</p>'
     '<ul class="ticks"><li>Druck und Fahrgeschwindigkeit am Roboter einstellbar</li><li>Live-Bild während des Abtrags</li><li>Auch zur Vorbereitung einer Sanierung</li></ul>'
-    '<p><a class="btn" href="#anfrage">Einsatz anfragen</a> <a class="btn ghost" href="#was">Was sich entfernen lässt</a></p></div></section>\n'
+    '<p><a class="btn" href="#anfrage">Einsatz anfragen</a></p></div></section>\n'
     + sec("Normale Reinigung kommt an harten Belägen nicht weiter.",
         "<p>Saugen und Spülen lösen Sand, Schlamm und Fett. Verkrustungen, Kalk oder Beton im Rohr, Wurzeln, die sich in die Wand gearbeitet haben, oder ein alter Liner, der sich abgelöst hat, bleiben dabei sitzen. Dort setzt der Wasserstrahl-Roboter an.</p>"
         "<p>Der Roboter fährt in die Haltung, die Kamera zeigt live, was vor dem Strahlkopf liegt, und der Bediener steuert aus sicherer Entfernung. Druck und Fahrgeschwindigkeit stellt er auf den Belag und das Rohrmaterial ein, so dass die Rohrwand geschont wird und der Abtrag nur dort erfolgt, wo er nötig ist.</p>",
