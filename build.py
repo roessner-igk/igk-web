@@ -73,7 +73,6 @@ TEAM = [
     ("Christina_Roessner", "Christina Rössner", "Assistenz der Geschäftsführung", "Marketing & Personal"),
     ("Sabine_Oelmeyer", "Sabine Oelmeyer", "Buchhaltung", "Rechnungswesen & kaufmännische Abwicklung"),
     ("Baule", "Frank Baule", "Projektleitung", "Dokumentation & Disposition"),
-    ("Jelena_Prange", "Jelena Prange", "Assistenz der Projektleitung", "Projektorganisation & -abwicklung"),
 ]
 team = "".join(
     f'<li class="person"><img src="/assets/team/{f}.jpg" alt="{n}" loading="lazy"><h3>{n}</h3><p><strong>{r}</strong><br>{d}</p></li>'
