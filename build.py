@@ -63,7 +63,7 @@ LEAF_TITLES = {
     "din-en-1610": "DIN EN 1610", "sonderpruefungen": "Sonderprüfungen", "hochdruckpruefungen": "Hochdruckprüfungen",
     "abscheider-generalinspektion": "Generalinspektion von Abscheidern",
     "rohrkalibrierung": "Kalibrierung", "deformationsmessung": "Deformationsmessung", "seileinzug": "Seileinzug",
-    "schlauchliner": "Schlauchliner", "hausanschlusssanierung": "Hausanschlusssanierung", "hauptkanalsanierung": "Hauptkanalsanierung",
+    "schlauchliner": "Schlauchliner",
     "kurzliner": "Kurzliner", "edelstahlmanschette": "Edelstahlmanschette", "linerendmanschette": "Linerendmanschette",
     "hutprofil": "Hutprofil", "roboterfraesarbeiten": "Roboterfräsarbeiten",
 }
@@ -79,7 +79,7 @@ AREAS = {
             ("reinigung", "Reinigung", ["hochdruckspuelwagen", "sehende-duese", "molchung", "wasserhoechstdruckfraesen"]),
             ("dichtheitspruefung", "Dichtheitsprüfung", ["din-en-1610", "abscheider-generalinspektion", "hochdruckpruefungen", "sonderpruefungen"]),
             ("kalibrierung", "Kalibrierung", ["deformationsmessung", "rohrkalibrierung"]),
-            ("sanierung", "Sanierung", [("Renovation", [("schlauchliner", ["hausanschlusssanierung", "hauptkanalsanierung"])]),
+            ("sanierung", "Sanierung", [("Renovation", ["schlauchliner"]),
                                         ("Reparatur", ["kurzliner", "edelstahlmanschette", "linerendmanschette", "hutprofil"]),
                                         ("Robotertätigkeiten", ["roboterfraesarbeiten", "wasserhoechstdruckfraesen"])])]},
     "kabelschutzrohre": {"title": "Kabelschutzrohre", "what": "Kabelschutzrohre und Leerrohre",
