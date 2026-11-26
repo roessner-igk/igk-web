@@ -61,7 +61,7 @@ SERVICES = [
     ("messung", "Dichtheitsprüfung", "Prüfung von Rohr- und Kanalnetzen auf Dichtheit."),
     ("pruefung", "Sanierung", "Sanierung schadhafter Rohre und Kanäle."),
 ]
-LINKS = {"messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
+LINKS = {"inspektion": "/kamerabefahrung.html", "messung": "/druckpruefung.html"}  # Kachel Dichtheitsprüfung -> Unterseite
 link = lambda i, t: f'<a href="{LINKS[i]}">{t}</a>' if i in LINKS else t
 cards = "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{i}.svg" alt="" width="40" height="40"></span><h3>{link(i, t)}</h3><p>{d}</p></li>'
