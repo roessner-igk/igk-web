@@ -197,7 +197,7 @@ RT_UEBERSICHT = (
            ["Protokoll je Rohrzug", "Zugseil im selben Durchgang wie die Kalibrierung", "Kamerabefahrung auf Wunsch"], "rohrtechnik", "Rohrservice anfragen")
     + sec("Vier Leistungen am Rohrzug", "<p>Wir reinigen Kabelschutzrohre und Leerrohre, prüfen sie mit Luft auf Dichtheit, weisen die Profilfreiheit nach und ziehen das Zugseil ein. Einzeln oder im selben Einsatz, mit Protokoll je Rohrzug.</p>" + ORDER + ORDER_TXT)
     + sec("Was welche Leistung nachweist", "<p>Die Kalibrierung weist den freien Querschnitt nach.</p><p>Ob das Rohr dicht ist, zeigt die Druckprüfung.</p><p>Die Molchreinigung trägt Material aus, bis der Molch sauber austritt.</p><p><strong>Keine dieser Leistungen ersetzt eine der anderen.</strong></p>", alt=True)
-    + REQ("Rohrservice anfragen"))
+    + f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>Rohrservice anfragen</h2>\n<p>Schreiben Sie uns per E-Mail: <a class="btn" href="mailto:vertrieb@igk-abwassertechnik.de">vertrieb@igk-abwassertechnik.de</a></p>\n</div></section>\n')
 
 RT_DRUCK = (
     r_hero(EYE, "Druckprüfung von Kabelschutzrohren", "Dichtheitsprüfung mit Luft nach DIN EN 1610, mit aufgezeichnetem Druckverlauf.",
