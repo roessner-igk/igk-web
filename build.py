@@ -202,50 +202,50 @@ RT_UEBERSICHT = (
     + f'<section class="section alt" id="anfrage"><div class="wrap prose"><p class="eyebrow">Anfrage</p><h2>Rohrservice anfragen</h2>\n<p>Schreiben Sie uns per E-Mail: <a class="btn" href="mailto:vertrieb@igk-abwassertechnik.de">vertrieb@igk-abwassertechnik.de</a></p>\n</div></section>\n')
 
 RT_DRUCK = (
-    r_hero(EYE, "Druckprüfung von Kabelschutzrohren", "Dichtheitsprüfung mit Luft nach DIN EN 1610, mit aufgezeichnetem Druckverlauf.",
+    r_hero("Rohre · Leitungen · Kanäle", "Druckprüfung von Rohrleitungen", "Dichtheitsprüfung mit Luft nach DIN EN 1610, mit aufgezeichnetem Druckverlauf.",
            ["Verfahren LC oder LD nach DIN EN 1610", "Druckverlauf aufgezeichnet", "Protokoll je Prüfabschnitt"], "druckpruefung", "Druckprüfung anfragen", how="verfahren")
-    + sec("Wann druckgeprüft wird", "<p>Ein Leerrohr soll trocken und frei bleiben, bis das Kabel kommt. Durch eine undichte Muffe können Wasser und Boden eindringen. Die Druckprüfung zeigt, ob der Rohrzug dicht ist, und das Ergebnis steht je Prüfabschnitt im Protokoll.</p>"
+    + sec("Wann druckgeprüft wird", "<p>Ein Rohr oder Kanal soll dicht sein, bevor es in Betrieb geht. Durch eine undichte Muffe oder Verbindung können Wasser und Boden ein- oder austreten. Die Druckprüfung zeigt, ob die Leitung dicht ist, und das Ergebnis steht je Prüfabschnitt im Protokoll.</p>"
         + tbl(["Anlass", "Warum"], [
-            ["Nach der Verlegung, vor dem Verfüllen des Grabens", "Die Einbauanleitung A 535a des Kunststoffrohrverbands sieht die Prüfung abschnittsweise und vor dem Verfüllen vor. Die Muffen sind dann noch zugänglich."],
-            ["Als Abnahmeprüfung nach dem Verfüllen", "Nachweis am fertigen Rohrzug, bevor die Anlage übergeben wird."],
-            ["Vor dem Kabeleinzug oder Kabeleinblasen", "Nachweis, dass kein Wasser und kein Boden in den Rohrzug eindringen können."],
+            ["Nach der Verlegung, vor dem Verfüllen des Grabens", "Die Prüfung erfolgt abschnittsweise, die Muffen und Verbindungen sind dann noch zugänglich."],
+            ["Als Abnahmeprüfung nach dem Verfüllen", "Nachweis an der fertigen Leitung, bevor die Anlage übergeben wird."],
+            ["Vor der Inbetriebnahme oder vor dem Kabeleinzug", "Nachweis, dass die Leitung dicht ist und kein Wasser und kein Boden eindringen können."],
             ["Bei Übernahme einer fremd verlegten Anlage", "Ein Nachweis durch Dritte vor der Abnahme."],
-            ["Bei Bestandsrohren vor einer Neubelegung", "Der Zustand ist unbekannt."]]), eyebrow="Anlässe")
+            ["Bei Bestandsleitungen vor einer Neunutzung oder Neubelegung", "Der Zustand ist unbekannt."]]), eyebrow="Anlässe")
     + sec("Rohrzug verschließen, Luft aufbringen, Druckverlauf messen",
-        "<p>Wir verschließen den Rohrzug an beiden Enden, bringen Luft auf den vereinbarten Prüfdruck und messen den Druck über die festgelegte Prüfzeit. Bleibt der Druckabfall unter dem zulässigen Wert, ist der Prüfabschnitt dicht.</p>"
+        "<p>Wir verschließen die Leitung an beiden Enden, bringen Luft auf den vereinbarten Prüfdruck und messen den Druck über die festgelegte Prüfzeit. Bleibt der Druckabfall unter dem zulässigen Wert, ist der Prüfabschnitt dicht.</p>"
         "<p>Geprüft wird nach <strong>DIN EN 1610</strong>, in der Regel mit Verfahren LC oder LD, sonst nach der Vorgabe in Ihrem Leistungsverzeichnis. Ein elektronisches Prüfgerät zeichnet den Druckverlauf auf und erstellt das Protokoll.</p>"
         + steps([("Prüfabschnitt und Prüfvorgabe festlegen", "In der Regel ein Rohrzug von Schacht zu Schacht. Prüfverfahren und Prüfdruck lassen wir uns vor dem ersten Prüfabschnitt schriftlich bestätigen."),
-                 ("Rohrzug reinigen", "Ist der Rohrzug nicht gereinigt, molchen wir ihn vorher."),
+                 ("Leitung reinigen", "Ist die Leitung nicht gereinigt, reinigen wir sie vorher, bei Kabelschutzrohren durch Molchen."),
                  ("Beide Enden verschließen", "Mit Prüfblasen oder mechanischen Rohrverschlüssen, passend zum Innendurchmesser und zum Prüfdruck."),
                  ("Anfangsdruck aufbringen", "Etwa zehn Prozent über dem Prüfdruck. Die Prüfzeit beginnt erst, wenn der Druck gleichmäßig verläuft."),
                  ("Prüfzeit messen", "Auf Prüfdruck absenken, die Prüfzeit nach Norm einhalten, den Druckabfall mit dem zulässigen Wert vergleichen.")])
         + "<h3>Wenn der Druck stärker abfällt als zulässig</h3><p>Zuerst prüfen wir Verschlüsse und Anschlüsse und wiederholen die Prüfung. Bleibt der Druckabfall zu hoch, wird der Prüfabschnitt als nicht bestanden dokumentiert und Ihnen gemeldet.</p>"
         f"<p>Ob an Muffen oder Rohrwand ein sichtbarer Schaden vorliegt, zeigt eine {CAM}.</p>", alt=True, eyebrow="Verfahren", id="verfahren")
     + sec("Ein Protokoll je Prüfabschnitt, mit Druckverlauf",
-        "<p>Das Protokoll ist eine Grundlage für die Freigabe zum Kabelzug. Was das Prüfgerät nicht ausgibt, ergänzen wir auf einem Deckblatt.</p><h3>Im Protokoll steht</h3>"
+        "<p>Das Protokoll ist eine Grundlage für Abnahme und Freigabe. Was das Prüfgerät nicht ausgibt, ergänzen wir auf einem Deckblatt.</p><h3>Im Protokoll steht</h3>"
         + ul(["Protokollnummer, ausführender Betrieb, Baustelle, Auftraggeber, Bauleiter und Prüfer", "Prüfart (Vorprüfung oder Abnahmeprüfung), Prüfverfahren und Prüfdruck",
               "Rohrwerkstoff, Rohrtyp, Rohrkennung, Länge, Start- und Zielschacht", "Messgerät mit Messbereich, Seriennummer und Kalibrierdatum",
               "Beginn und Ende der Prüfung, Dauer von Beruhigungszeit und Prüfzeit", "Druck nach Beruhigungszeit und nach Prüfzeit, zulässiger und gemessener Druckabfall",
               "Ergebnis und Druckverlauf", "Unterschrift"]) + NR, eyebrow="Ergebnis")
     + cta_band("Für die Anfrage genügen die Rohrdaten", "Prüfvorgabe, Zugang zu den Rohrenden und Freigabe der Trasse klären wir danach mit Ihnen.", "Druckprüfung anfragen")
     + sec("Prüfdruck und zulässiger Druckabfall",
-        "<p>DIN EN 1610 kennt vier Verfahren für die Prüfung mit Luft. Sie unterscheiden sich im Prüfdruck und im zulässigen Druckabfall, die Prüfzeit hängt außerdem vom Durchmesser ab.</p>"
-        "<p>Für Kabelschutzrohre nennen die Einbauanleitungen <strong>A 535a</strong> und <strong>A 535b</strong> des Kunststoffrohrverbands einen Prüfdruck von 200 mbar mit Luft, die Einbauanleitung des Rohrherstellers Schöngen dazu einen zulässigen Druckabfall von 15 mbar. Das entspricht <strong>Verfahren LD</strong>.</p>"
+        "<p>DIN EN 1610 kennt vier Verfahren für die Prüfung mit Luft. Sie unterscheiden sich im Prüfdruck und im zulässigen Druckabfall, die Prüfzeit hängt außerdem vom Durchmesser ab. Geprüft wird nach den Vorgaben Ihres Leistungsverzeichnisses, ohne Vorgabe in der Regel nach LC oder LD.</p>"
+        "<p><strong>Bei Kabelschutzrohren</strong> nennen die Einbauanleitungen <strong>A 535a</strong> und <strong>A 535b</strong> des Kunststoffrohrverbands einen Prüfdruck von 200 mbar mit Luft, die Einbauanleitung des Rohrherstellers Schöngen dazu einen zulässigen Druckabfall von 15 mbar. Das entspricht <strong>Verfahren LD</strong>.</p>"
         + tbl(["Verfahren", "Prüfdruck", "zulässiger Druckabfall", "Prüfzeit"], [["LA", "10 mbar", "2,5 mbar", "5 min"], ["LB", "50 mbar", "10 mbar", "4 min"], ["LC", "100 mbar", "15 mbar", "3 min"], ["LD", "200 mbar", "15 mbar", "1,5 min"]],
               "Luftprüfung nach DIN EN 1610, Prüfzeiten für DN 100 bis DN 200. Prüfzeiten für Rohre aus Kunststoff. Für andere Durchmesser gelten die Werte nach Tabelle 3 der Norm.")
         + "<p>Die Baufachlichen Richtlinien Abwasser des Bundes weisen darauf hin, dass die hohe Messempfindlichkeit von LA und LB bei Störungen von außen zu Messungenauigkeiten führen kann. Sie empfehlen für die Prüfung mit Luft ausschließlich LC oder LD.</p>", alt=True, eyebrow="Prüfverfahren")
     + sec("Was die Druckprüfung nachweist und was nicht", NOT(["freiem Querschnitt und Verformung", "Sauberkeit des Rohres", "Lage einer Undichtheit", "Lagegenauigkeit des Rohres", "Werkstoffzustand"]), eyebrow="Abgrenzung")
-    + sec("In dieser Reihenfolge arbeiten wir", ORDER + ORDER_TXT, alt=True, eyebrow="Reihenfolge")
+    + sec("Bei Kabelschutzrohren: In dieser Reihenfolge arbeiten wir", ORDER + ORDER_TXT, alt=True, eyebrow="Reihenfolge")
     + sec("Was Sie bereitstellen", "<p>Damit der Termin hält, muss vorab Folgendes geklärt sein.</p>" + ul([
-        "Prüfverfahren und Prüfdruck vorgegeben oder freigegeben", "Rohrwerkstoff, Außendurchmesser und Wanddicke bekannt",
-        "Angabe, ob vor dem Verfüllen oder als Abnahmeprüfung nach dem Verfüllen geprüft wird", "Rohrzug gereinigt, oder die Reinigung ist mitbeauftragt",
-        "Rohrenden an beiden Seiten zugänglich, offen und entgratet", "befahrbare Aufstellfläche für die Luftversorgung am Startende",
+        "Prüfverfahren und Prüfdruck vorgegeben oder freigegeben", "Rohrwerkstoff, Nennweite bzw. Außendurchmesser und Wanddicke bekannt",
+        "Angabe, ob vor dem Verfüllen oder als Abnahmeprüfung nach dem Verfüllen geprüft wird", "Leitung gereinigt, oder die Reinigung ist mitbeauftragt",
+        "Leitungsenden bzw. Schächte an beiden Seiten zugänglich, offen und entgratet", "befahrbare Aufstellfläche für die Luftversorgung am Startende",
         "eindeutige Rohrnummerierung an beiden Enden, oder die Kennzeichnung ist mitbeauftragt", "Ihre Freigabe, falls in Schächte eingestiegen werden muss"]), eyebrow="Voraussetzungen")
-    + sec("Leistungsverzeichnis und Vergabe", "<p>Leistungsverzeichnisse im Kabelleitungstiefbau verweisen für die Dichtheitsprüfung meist auf DIN EN 1610. Im STLB-Bau steht eine Position dazu im Leistungsbereich 009 Entwässerungskanalarbeiten, Abrechnungseinheit ist der Meter.</p>", alt=True, eyebrow="Für Ausschreibende")
+    + sec("Leistungsverzeichnis und Vergabe", "<p>Leistungsverzeichnisse verweisen für die Dichtheitsprüfung meist auf DIN EN 1610. Im STLB-Bau steht eine Position dazu im Leistungsbereich 009 Entwässerungskanalarbeiten, Abrechnungseinheit ist der Meter.</p>", alt=True, eyebrow="Für Ausschreibende")
     + sec("Fragen zur Druckprüfung", faq([
-        ("Welches Prüfverfahren ist das richtige?", "Das, was Ihr Leistungsverzeichnis vorgibt. Die Einbauanleitungen für Kabelschutzrohre nennen 200 mbar Prüfdruck bei 15 mbar zulässigem Druckabfall, das entspricht Verfahren LD. Ohne Vorgabe prüfen wir nach LC oder LD."),
-        ("Gilt DIN EN 1610 überhaupt für Kabelschutzrohre?", "Formal nicht, sie ist eine Abwassernorm. Die Rohrhersteller verweisen in ihren Einbauanleitungen für Kabelschutzrohre trotzdem auf sie. Wir prüfen mit den Parametern dieser Norm, sofern Sie nichts anderes vorgeben."),
-        ("Wird die Prüfung auch bezahlt, wenn der Rohrzug undicht ist?", "Ja. Vergütet wird die Prüfung, unabhängig vom Ergebnis."),
+        ("Welches Prüfverfahren ist das richtige?", "Das, was Ihr Leistungsverzeichnis vorgibt. Bei Kabelschutzrohren nennen die Einbauanleitungen 200 mbar Prüfdruck bei 15 mbar zulässigem Druckabfall, das entspricht Verfahren LD. Ohne Vorgabe prüfen wir nach LC oder LD."),
+        ("Gilt DIN EN 1610 auch für Kabelschutzrohre?", "Formal nicht, sie ist eine Abwassernorm. Die Rohrhersteller verweisen in ihren Einbauanleitungen für Kabelschutzrohre trotzdem auf sie. Wir prüfen mit den Parametern dieser Norm, sofern Sie nichts anderes vorgeben."),
+        ("Wird die Prüfung auch bezahlt, wenn die Leitung undicht ist?", "Ja. Vergütet wird die Prüfung, unabhängig vom Ergebnis."),
         ("Können wir das nicht selbst prüfen?", "Können Sie. Dann prüft allerdings derjenige, der verlegt hat, sein eigenes Werk. Wir halten das Ergebnis je Prüfabschnitt im Protokoll fest, mit Druckverlauf.")]), eyebrow="Häufige Fragen")
     + REQ("Druckprüfung anfragen"))
 
@@ -355,7 +355,7 @@ RT_KAMERA = (
 
 PAGES = {
     "rohrtechnik": ("Rohrservice an Kabelschutzrohren – IGK Abwassertechnik GmbH", "Molchreinigung, Druckprüfung, Kalibrierung und Seileinzug an Kabelschutzrohren und Leerrohren", RT_UEBERSICHT),
-    "druckpruefung": ("Druckprüfung von Kabelschutzrohren – IGK Abwassertechnik GmbH", "Dichtheitsprüfung von Kabelschutzrohren mit Luft nach DIN EN 1610, mit Protokoll je Prüfabschnitt", RT_DRUCK),
+    "druckpruefung": ("Druckprüfung von Rohrleitungen – IGK Abwassertechnik GmbH", "Dichtheitsprüfung von Rohrleitungen und Kanälen mit Luft nach DIN EN 1610, mit Protokoll je Prüfabschnitt", RT_DRUCK),
     "kalibrierung": ("Kalibrierung von Kabelschutzrohren – IGK Abwassertechnik GmbH", "Nachweis der Profilfreiheit von Kabelschutzrohren vor dem Kabelzug", RT_KALIB),
     "kamerabefahrung": ("Kamerabefahrung von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
     "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat", INDEX),
