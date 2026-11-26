@@ -22,7 +22,7 @@ HEAD = """<!DOCTYPE html>
   <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
   <nav>
     <a href="/#leistungen">Leistungen</a>
-    <a href="/rohrtechnik.html">Rohrtechnik</a>
+    <a href="/rohrtechnik.html">Kabelschutzrohre</a>
     <a href="/karriere.html">Karriere</a>
     <a href="/ansprechpartner.html">Ansprechpartner</a>
     <a class="btn" href="tel:+4942984 10 42".replace(" ","")>Anrufen</a>
@@ -64,7 +64,7 @@ SERVICES = [
 cards = "".join(
     f'<li class="card"><span class="ico"><img src="/assets/icons/{i}.svg" alt="" width="40" height="40"></span><h3>{t}</h3><p>{d}</p></li>'
     for i, t, d in SERVICES)
-cards += '<li class="card"><span class="ico"><img src="/assets/icons/inspektion.svg" alt="" width="40" height="40"></span><h3><a href="/rohrtechnik.html">Rohrtechnik</a></h3><p>Kabelschutzrohre: Molchreinigung, Druckprüfung, Kalibrierung, Seileinzug.</p></li>'
+cards += '<li class="card"><span class="ico"><img src="/assets/icons/inspektion.svg" alt="" width="40" height="40"></span><h3><a href="/rohrtechnik.html">Kabelschutzrohre</a></h3><p>Kabelschutzrohre: Molchreinigung, Druckprüfung, Kalibrierung, Seileinzug.</p></li>'
 
 TEAM = [
     ("Thorbjoern_Roessner", "Ing. Thorbjörn Rössner", "Geschäftsführender Gesellschafter · Zertifizierter Kanalsanierungsberater", "Kalkulation, Angebotserstellung und Projektleitung Sanierung"),
@@ -140,13 +140,13 @@ legal = lambda h, n: f'<section class="wrap section prose">{FRAG(n)}</section>\n
 import re
 TEL = re.search(r'href="(tel:[^"]+)"', FOOT).group(1)
 MAIL = "info@igk-abwassertechnik.de"
-R_NAV = [("rohrtechnik", "Übersicht"), ("druckpruefung", "Druckprüfung"), ("kalibrierung", "Kalibrierung"), ("kamerabefahrung", "Kamerabefahrung")]
+R_NAV = [("rohrtechnik", "Übersicht"), ("druckpruefung", "Dichtheitsprüfung"), ("kalibrierung", "Kalibrierung"), ("kamerabefahrung", "Kamerabefahrung")]
 
 def r_hero(eyebrow, h1, lead, bullets, active, cta, how=None):
     nav = "".join(f'<a href="/{k}.html"' + (' aria-current="page"' if k == active else "") + f">{t}</a>" for k, t in R_NAV)
     li = "".join(f"<li>{b}</li>" for b in bullets)
     how = f' <a class="btn ghost" href="#{how}">So läuft es ab</a>' if how else ""
-    return (f'<div class="subnav" role="navigation" aria-label="Rohrtechnik"><div class="wrap">{nav}</div></div>\n'
+    return (f'<div class="subnav" role="navigation" aria-label="Kabelschutzrohre"><div class="wrap">{nav}</div></div>\n'
             f'<section class="hero"><div class="wrap"><p class="eyebrow">{eyebrow}</p><h1>{h1}</h1><p>{lead}</p><ul class="ticks">{li}</ul>'
             f'<p><a class="btn" href="#anfrage">{cta}</a>{how}</p></div></section>\n')
 
@@ -178,7 +178,7 @@ REQ = lambda h2: request(h2, "Wir melden uns mit Rückfragen oder mit Machbarkei
 
 ORDER = steps([
     ("Reinigen", "Schaumstoffmolch mit Druckluft, so oft, bis er sauber austritt. Ohne Wasser, damit das Rohr trocken bleibt."),
-    ("Druckprüfen", 'Dichtheitsprüfung mit Luft, Prüfverfahren und Prüfdruck nach Vorgabe des Auftraggebers. <a href="/druckpruefung.html">Zur Druckprüfung</a>'),
+    ("Dichtheitsprüfung", 'Dichtheitsprüfung mit Luft, Prüfverfahren und Prüfdruck nach Vorgabe des Auftraggebers. <a href="/druckpruefung.html">Zur Dichtheitsprüfung</a>'),
     ("Kalibrieren", 'Kalibrierdorn mit Treibmolch, Nachweis der Profilfreiheit nach vereinbartem Kalibermaß. <a href="/kalibrierung.html">Zur Kalibrierung</a>'),
     ("Seileinzug", "Zugseil am Treibmolch, im selben Durchgang wie die Kalibrierung. Beide Enden gekennzeichnet."),
     ("Kamerabefahrung", 'Optional, wenn sichtbar werden soll, wie das Rohr innen aussieht. <a href="/kamerabefahrung.html">Zur Rohrinspektion</a>'),
