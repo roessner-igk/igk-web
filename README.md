@@ -40,6 +40,6 @@ Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 
 ## GitHub Pages
 `.github/workflows/pages.yml` deploys `site/` on every push to `main`.
-- Interim: https://samheyna.github.io/web-igk/ (workflow rewrites root paths to `/web-igk/`).
+- Interim: https://roessner-igk.github.io/igk-web/ (workflow rewrites root paths to `/igk-web/`).
 - Custom domain: add file `CNAME` (repo root, one line: domain), set the domain in Settings → Pages, point DNS (CNAME `www` → `samheyna.github.io`, apex A records per GitHub docs). With `CNAME` present, no path rewrite.
 - One-time: Settings → Pages → Source = "GitHub Actions".

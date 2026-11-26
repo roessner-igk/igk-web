@@ -25,12 +25,12 @@ jobs:
       - name: Prepare site
         run: |
           cp -r site _pages
-          # Custom domain: CNAME file in repo root. Without it, serve under /web-igk/ (project URL).
+          # Custom domain: CNAME file in repo root. Without it, serve under /${{ github.event.repository.name }}/ (project URL).
           if [ -f CNAME ]; then
             cp CNAME _pages/CNAME
           else
-            find _pages -name '*.html' -exec sed -i -E 's#(href|src)="/#\1="/web-igk/#g' {} +
-            sed -i 's#url(/#url(/web-igk/#g' _pages/assets/style.css
+            find _pages -name '*.html' -exec sed -i -E 's#(href|src)="/#\1="/${{ github.event.repository.name }}/#g' {} +
+            sed -i 's#url(/#url(/${{ github.event.repository.name }}/#g' _pages/assets/style.css
           fi
           touch _pages/.nojekyll
       - uses: actions/upload-pages-artifact@v3
