@@ -37,3 +37,9 @@ Never edit `site/*.html` by hand; it is overwritten by `build.py`.
 - Personio iframe has fixed height; fallback link exists for Personio outages.
 - Site is currently public and indexable on the review host; add `X-Robots-Tag: noindex` in `Caddyfile` for review, remove for production.
 - Old site had no ingress/domain setup for production: see `AGENTS.md` → "Go-live".
+
+## GitHub Pages
+`.github/workflows/pages.yml` deploys `site/` on every push to `main`.
+- Interim: https://samheyna.github.io/web-igk/ (workflow rewrites root paths to `/web-igk/`).
+- Custom domain: add file `CNAME` (repo root, one line: domain), set the domain in Settings → Pages, point DNS (CNAME `www` → `samheyna.github.io`, apex A records per GitHub docs). With `CNAME` present, no path rewrite.
+- One-time: Settings → Pages → Source = "GitHub Actions".
