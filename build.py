@@ -352,8 +352,13 @@ RT_KAMERA = (
                "Anwendungsfeld, zum Beispiel Stromkabel-Schutzrohre, Mantelrohre und Querungen, Glasfaser- und Leerrohre, Industrie- und Prozessrohre", "Ort und geplanter Zeitraum"],
               "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
 
+C_NAV = [("reinigung", "Reinigung unter Sicht"), ("hochdruck", "Höchstdruck-Wasserstrahlen")]
+def c_nav(active):
+    nav = "".join(f'<a href="/{k}.html"' + (' aria-current="page"' if k == active else "") + f">{t}</a>" for k, t in C_NAV)
+    return f'<div class="subnav" role="navigation" aria-label="Kanalreinigung"><div class="wrap">{nav}</div></div>\n'
+
 RT_REINIGUNG = (
-    '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Hausanschlussleitungen</p><h1>Reinigung unter optischer Kontrolle</h1>'
+    c_nav("reinigung") + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Hausanschlussleitungen</p><h1>Reinigung unter optischer Kontrolle</h1>'
     '<p><strong>Reinigen und dabei zusehen.</strong> Eine lenkbare Spüleinheit mit Kamera im Spülkopf, die „sehende Düse“, verbindet Hochdruckreinigung und optische Inspektion in einem Arbeitsgang. So sehen wir während der Reinigung, was im Haupt- und im Anschlusskanal passiert.</p>'
     '<ul class="ticks"><li>Reinigungsergebnis direkt im Bild geprüft</li><li>Abbiegen in Anschlussleitungen vom Hauptkanal aus</li></ul>'
     '<p><a class="btn" href="#anfrage">Reinigung anfragen</a> <a class="btn ghost" href="#vorteile">Ihre Vorteile</a></p></div></section>\n'
@@ -394,12 +399,55 @@ RT_REINIGUNG = (
                "Ort und gewünschter Zeitraum"],
               "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
 
+RT_HOCHDRUCK = (
+    c_nav("hochdruck")
+    + '<section class="hero"><div class="wrap"><p class="eyebrow">Kanalreinigung · Spezialreinigung</p><h1>Höchstdruck-Wasserstrahlen</h1>'
+    '<p><strong>Wenn Spülen nicht mehr reicht.</strong> Harte Ablagerungen, Einwüchse und Fremdkörper im Kanal tragen wir mit einem kamerageführten Wasserstrahl-Roboter ab, per Fernsteuerung und unter Live-Bild.</p>'
+    '<ul class="ticks"><li>Druck und Fahrgeschwindigkeit am Roboter einstellbar</li><li>Live-Bild während des Abtrags</li><li>Auch zur Vorbereitung einer Sanierung</li></ul>'
+    '<p><a class="btn" href="#anfrage">Einsatz anfragen</a> <a class="btn ghost" href="#was">Was sich entfernen lässt</a></p></div></section>\n'
+    + sec("Normale Reinigung kommt an harten Belägen nicht weiter.",
+        "<p>Saugen und Spülen lösen Sand, Schlamm und Fett. Verkrustungen, Kalk oder Beton im Rohr, Wurzeln, die sich in die Wand gearbeitet haben, oder ein alter Liner, der sich abgelöst hat, bleiben dabei sitzen. Dort setzt der Wasserstrahl-Roboter an.</p>"
+        "<p>Der Roboter fährt in die Haltung, die Kamera zeigt live, was vor dem Strahlkopf liegt, und der Bediener steuert aus sicherer Entfernung. Druck und Fahrgeschwindigkeit stellt er auf den Belag und das Rohrmaterial ein, so dass die Rohrwand geschont wird und der Abtrag nur dort erfolgt, wo er nötig ist.</p>",
+        eyebrow="Das Problem")
+    + sec("Was sich mit dem Wasserstrahl entfernen lässt.", ul([
+        "Inkrustationen, Kalk, Beton und Bitumen",
+        "Wurzeleinwüchse und Fettablagerungen",
+        "Fremdkörper im Rohr, zum Beispiel Reste von Linern sowie Stahl- und Stahlbetonteile",
+        "Aufbereitung der Haltung vor dem Einzug eines Liners"])
+        + "<p class=\"note\">Welche Nennweiten, Profile und Haltungslängen sich bearbeiten lassen, hängt vom Einzelfall ab. Das klären wir vorab mit Ihnen.</p>",
+        alt=True, eyebrow="Anwendung", id="was")
+    + sec("So läuft ein Einsatz ab.", steps([
+        ("Haltung beurteilen", "Wir klären Profil, Material, Art des Belags und Zugang über die Schächte. Gibt es Aufnahmen aus einer Inspektion, nutzen wir sie."),
+        ("Roboter einsetzen", "Der Roboter wird über den Schacht in die Haltung gebracht. Die Kamera liefert von Anfang an das Live-Bild."),
+        ("Abtragen unter Sicht", "Druck und Fahrgeschwindigkeit passen wir am Belag an. Der Bediener sieht den Fortschritt und kann sofort nachregeln oder stoppen."),
+        ("Ergebnis prüfen", "Am Ende ist die Haltung frei, auf Wunsch mit Aufnahmen als Nachweis, bevor es mit Sanierung oder Abnahme weitergeht.")]),
+        eyebrow="Ablauf")
+    + sec("Kaltschneiden ohne Wärmeeintrag.",
+        "<p>Der Höchstdruck-Wasserstrahl trennt kalt. Es entsteht keine Wärme und kein Funkenflug, und das macht ihn für Bereiche interessant, in denen Hitze ein Risiko wäre, etwa bei explosionsgefährdeten oder sicherheitssensiblen Anlagen.</p>",
+        alt=True, eyebrow="Besonderheit")
+    + sec("Warum der Roboter statt Handarbeit.",
+        '<ul class="cards"><li class="card"><h3>Gezielt statt grob</h3><p>Live-Bild und einstellbare Parameter erlauben einen Abtrag genau dort, wo er gebraucht wird.</p></li>'
+        '<li class="card"><h3>Sicher für das Personal</h3><p>Die Fernsteuerung hält das Personal aus der Haltung heraus und senkt damit Gesundheitsrisiken.</p></li>'
+        '<li class="card"><h3>Auch schwierig zugänglich</h3><p>Die mobile Technik erreicht Systeme, bei denen andere Verfahren an Platz oder Zugang scheitern.</p></li>'
+        '<li class="card"><h3>Sauber getrennt</h3><p>Eingesetzt werden Wasser und Abrasivmittel, die sich getrennt auffangen und umweltgerecht entsorgen lassen.</p></li></ul>',
+        eyebrow="Ihre Vorteile")
+    + sec("Das richtige Verfahren für Ihre Haltung.",
+        '<p>Ist die Leitung nur verschmutzt, genügt oft Saugen und Spülen. Müssen Anschlussleitungen gezielt unter Sicht gereinigt werden, hilft die <a href="/reinigung.html">Reinigung unter optischer Kontrolle</a>. Der Wasserstrahl-Roboter kommt dazu, wenn harte Beläge, Einwüchse oder Fremdkörper entfernt werden müssen. Danach folgt bei Bedarf die <a href="/inspektion.html">Inspektion</a> oder die <a href="/druckpruefung.html">Dichtheitsprüfung</a>.</p>',
+        alt=True, eyebrow="Einordnung")
+    + request("Einsatz anfragen",
+              "Schildern Sie uns die Haltung. Wir melden uns mit Rückfragen oder mit Machbarkeit und Angebot.",
+              ["Art des Belags oder Hindernisses, soweit bekannt", "Profil, Werkstoff und Nennweite der Haltung",
+               "Ungefähre Länge und Zugangspunkte, zum Beispiel Schächte", "Anlass: Reinigung, Vorbereitung einer Sanierung, Fremdkörper oder noch unklar",
+               "vorhandene Inspektionsaufnahmen, falls vorhanden", "Ort und gewünschter Zeitraum"],
+              "Ein kurzer Hinweis per E-Mail genügt, wenn noch nicht alles feststeht:"))
+
 PAGES = {
     "rohrtechnik": ("Rohrservice an Kabelschutzrohren – IGK Abwassertechnik GmbH", "Molchreinigung, Druckprüfung, Kalibrierung und Seileinzug an Kabelschutzrohren und Leerrohren", RT_UEBERSICHT),
     "druckpruefung": ("Druckprüfung von Rohrleitungen – IGK Abwassertechnik GmbH", "Dichtheitsprüfung von Rohrleitungen und Kanälen mit Luft nach DIN EN 1610, mit Protokoll je Prüfabschnitt", RT_DRUCK),
     "kalibrierung": ("Kalibrierung von Kabelschutzrohren – IGK Abwassertechnik GmbH", "Nachweis der Profilfreiheit von Kabelschutzrohren vor dem Kabelzug", RT_KALIB),
     "inspektion": ("Inspektion von Rohren und Leitungen – IGK Abwassertechnik GmbH", "Optische Inspektion von Rohren und Leitungen: Nachweis vor dem Kabeleinzug und Ursachensuche nach auffälliger Druckprüfung", RT_KAMERA),
     "reinigung": ("Reinigung unter optischer Kontrolle – IGK Abwassertechnik GmbH", "Reinigung von Rohren, Kanälen und Hausanschlussleitungen unter Kamerabeobachtung mit lenkbarer Spüleinheit", RT_REINIGUNG),
+    "hochdruck": ("Höchstdruck-Wasserstrahlen im Kanal – IGK Abwassertechnik GmbH", "Spezialreinigung von Kanälen mit kamerageführtem Wasserstrahl-Roboter: harte Beläge, Einwüchse und Fremdkörper entfernen", RT_HOCHDRUCK),
     "index": ("IGK Abwassertechnik – Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen", "Rohr-, Kanal- und Kabelschutzrohr-Dienstleistungen für Kommunen, Industrie und Privat", INDEX),
     "karriere": ("Karriere – IGK Abwassertechnik GmbH", "Offene Stellen bei der IGK Abwassertechnik GmbH", KARRIERE),
     "ansprechpartner": ("Ansprechpartner – IGK Abwassertechnik GmbH", "Ihre Ansprechpartner bei der IGK Abwassertechnik GmbH", ANSPRECH),
